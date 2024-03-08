@@ -39,13 +39,11 @@ export const register = async (req, res) => {
             data: newUser
         })
     } catch (error) {
-        res.status(500).json(
-            {
+        res.status(500).json({
               success: false,
               message: "User cant be registered",
               error: error.message
-            }
-        )
+        })
         // if (error.message === "Password must contain between 6 and 10 characters" ||
         //     error.message === "Email format invalid") {
         //     handleError(res, error.message, 400)
