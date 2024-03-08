@@ -1,6 +1,7 @@
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
-import User from '../models/User.js'
+import User from '../user/user.model.js'
+import { handleError } from '../../utils/handleError.js'
 
 export const register = async (req, res) => {
     try {
@@ -8,6 +9,7 @@ export const register = async (req, res) => {
         const password = req.body.password
 
         if (password.length < 6 || password.length > 10) {
+            // throw new Error("Password must contain between 6 and 10 characters")
             return res.status(400).json({
                 success: false,
                 message: "Password must contain between 6 and 10 characters"
@@ -17,6 +19,7 @@ export const register = async (req, res) => {
         const validEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/
 
         if (!validEmail.test(email)) {
+            // throw new Error("Email format invalid")
             return res.status(400).json({
                     success: false,
                     message: "Email format invalid"
@@ -36,11 +39,18 @@ export const register = async (req, res) => {
             data: newUser
         })
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "User can't be registered",
-            error: error
-        })
+        res.status(500).json(
+            {
+              success: false,
+              message: "Book cant retrieved",
+              error: error.message
+            }
+          )
+        // if (error.message === "Password must contain between 6 and 10 characters" ||
+        //     error.message === "Email format invalid") {
+        //     handleError(res, error.message, 400)
+        // }
+        // handleError(res, "Cant register user") //500 por defecto en la definicion de la funcion
     }
 }
 

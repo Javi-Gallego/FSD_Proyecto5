@@ -17,9 +17,19 @@ const UserSchema = new Schema(
         },
         role: {
             type: String,
-            enum: ["super_admin", "admin", "user"],
+            enum: ["super_admin", "user"],
             default: "user"
         },
+        following: [{
+            type: Schema.Types.ObjectId,
+            ref: "User",
+            default: []
+        }],
+        followers: [{
+            type: Schema.Types.ObjectId,
+            ref: "User",
+            default: []
+        }],
         is_active: {
             type: Boolean,
             default: true
