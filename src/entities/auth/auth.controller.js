@@ -42,10 +42,10 @@ export const register = async (req, res) => {
         res.status(500).json(
             {
               success: false,
-              message: "Book cant retrieved",
+              message: "User cant be registered",
               error: error.message
             }
-          )
+        )
         // if (error.message === "Password must contain between 6 and 10 characters" ||
         //     error.message === "Email format invalid") {
         //     handleError(res, error.message, 400)
