@@ -1,8 +1,7 @@
 import bcrypt from "bcrypt"
-import User from "../user/user.model.js"
-import { createUser, emailInUse } from "./auth.repository.js"
+import { createUser, emailInUse } from "./register.repository.js"
 
-export const getAuthService = async (req) => {
+export const getRegisterService = async (req) => {
 
     const email = req.body.email
     const password = req.body.password
@@ -10,6 +9,7 @@ export const getAuthService = async (req) => {
     if (!email || !password) {
         throw new Error("Email and password are required")
     }
+    
     if (password.length < 6 || password.length > 10) {
         throw new Error("Password must contain between 6 and 10 characters")
     }
