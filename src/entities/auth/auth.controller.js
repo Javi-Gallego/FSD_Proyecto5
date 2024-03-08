@@ -2,36 +2,12 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import User from '../user/user.model.js'
 import { handleError } from '../../utils/handleError.js'
+import { getAuthService } from './auth.service.js'
 
 export const register = async (req, res) => {
     try {
-        const email = req.body.email
-        const password = req.body.password
 
-        if (password.length < 6 || password.length > 10) {
-            // throw new Error("Password must contain between 6 and 10 characters")
-            return res.status(400).json({
-                success: false,
-                message: "Password must contain between 6 and 10 characters"
-            })
-        }
-
-        const validEmail = /^\w+([.-_+]?\w+)*@\w+([.-]?\w+)*(\.\w{2,10})+$/
-
-        if (!validEmail.test(email)) {
-            // throw new Error("Email format invalid")
-            return res.status(400).json({
-                    success: false,
-                    message: "Email format invalid"
-            })
-        }
-
-        const passwordEncrypted = bcrypt.hashSync(password, 5)
-
-        const newUser = await User.create({
-            email: email,
-            password: passwordEncrypted       
-        })
+        const newUser = await getAuthService(req)
 
         res.status(201).json({
             success: true,
@@ -39,16 +15,13 @@ export const register = async (req, res) => {
             data: newUser
         })
     } catch (error) {
-        res.status(500).json({
-              success: false,
-              message: "User cant be registered",
-              error: error.message
-        })
-        // if (error.message === "Password must contain between 6 and 10 characters" ||
-        //     error.message === "Email format invalid") {
-        //     handleError(res, error.message, 400)
-        // }
-        // handleError(res, "Cant register user") //500 por defecto en la definicion de la funcion
+        if (error.message === "Email and password are required" ||
+            error.message === "Password must contain between 6 and 10 characters" ||
+            error.message === "Email format invalid" ||
+            error.message === "Email already in use") {
+            return handleError(res, error.message, 400)
+        }
+        handleError(res, "Cant register user", 500) //500 por defecto en la definicion de la funcion
     }
 }
 

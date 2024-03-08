@@ -2,7 +2,7 @@ import User from "./user.model.js"
 
 export const getUsers = async (req, res) => {
     try {
-        const users = await User.find().select("-password")
+        const users = await User.find().select("-password").skip(0).limit(2)
 
         res.status(200).json({
             success: true,
