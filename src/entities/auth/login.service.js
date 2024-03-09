@@ -5,7 +5,7 @@ import { getUserByMail } from "./login.repository.js"
 export const getLoginService = async (req) => {
     const email = req.body.email
     const password = req.body.password
-
+    
     if (!email || !password) {
          throw new Error("Email and password are required")
     }
@@ -19,7 +19,7 @@ export const getLoginService = async (req) => {
     if (!validEmail.test(email)) {
         throw new Error("Email format is not valid")
     }
-    
+
     const user = await getUserByMail(email)
 
     if(!user){

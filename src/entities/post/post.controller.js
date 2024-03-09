@@ -1,4 +1,5 @@
-import { createPostService } from "./post.service.js"
+import { createPostService, getAllPostsService } from "./post.service.js"
+import { handleError } from "../../utils/handleError.js"
 
 export const createPost = async (req, res) => {
     try {
@@ -15,4 +16,18 @@ export const createPost = async (req, res) => {
         }
         handleError(res, "Cant create post", 500)
     }
+}
+
+export const getAllPosts = async (req, res) => {
+    try {
+        const posts = await getAllPostsService(req)
+
+        res.status(201).json({
+            success: true,
+            message: "Posts retrieved succesfully",
+            data: posts
+        })
+    } catch (error) {
+        handleError(res, "Cant retrieve posts", 500)
+    } 
 }
