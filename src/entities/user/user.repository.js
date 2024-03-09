@@ -1,9 +1,16 @@
 import User from "./user.model.js"
+import bcrypt from "bcrypt"
 
-export const getUsersAsSuperAdminRepository = async (name, skip, limit) => {
+export const getUsersAsSuperAdminRepository = async (req, skip, limit) => {
+
+    const { name, email, firstName, lastName , role} = req.body
 
     const users = await User.find({ 
-        role: new RegExp(name, 'i') })
+        userName: new RegExp(name, 'i'),
+        email: new RegExp(email, 'i'),
+        firstName: new RegExp(firstName, 'i'),
+        lastName: new RegExp(lastName, 'i'),
+        role: new RegExp(role, 'i')})
         .select("-password")
         .skip(skip)
         .limit(limit)
@@ -15,10 +22,11 @@ export const getUsersAsSuperAdminRepository = async (name, skip, limit) => {
     return users
 }
 
-export const getUsersAsUserRepository = async (name, skip, limit) => {
+export const getUsersAsUserRepository = async (userName, skip, limit) => {
 
     const users = await User.find({ 
-        role: new RegExp(name, 'i'),
+        userName: new RegExp(userName, 'i'),
+        role: "user",
         is_active: true,
         privacy: "public"})
         .select("-password")
@@ -60,4 +68,11 @@ export const changePassword = async (userId, currentPassword, newPassword) => {
         throw new Error("User not found")
     }
 
+    if(!bcrypt.compareSync(currentPassword, user.passwordHash)){
+        throw new Error("Current password is incorrect")
+    }
+
+    const newPassHash = bcrypt.hashSync(newPassword, 5)
+
+    return newPassHash
 }

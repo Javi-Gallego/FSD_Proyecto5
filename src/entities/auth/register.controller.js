@@ -12,10 +12,12 @@ export const register = async (req, res) => {
             data: newUser
         })
     } catch (error) {
-        if (error.message === "Email and password are required" ||
+        if (error.message === "User name, email and password are required" ||
+            error.message === "User name must contain between 3 and 10 characters" ||
             error.message === "Password must contain between 6 and 10 characters" ||
             error.message === "Email format invalid" ||
-            error.message === "Email already in use") {
+            error.message === "Email already in use" ||
+            error.message === "User name already in use") {
             return handleError(res, error.message, 400)
         }
         handleError(res, "Cant register user", 500) //500 por defecto en la definicion de la funcion

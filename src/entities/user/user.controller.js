@@ -47,7 +47,10 @@ export const updateProfile = async (req, res) => {
         })
     } catch (error) {
         if (error.message === "No data to update" || 
-            error.message === "Both currentPassword and newPassword must be provided") {
+            error.message === "Both currentPassword and newPassword must be provided" ||
+            error.message === "User is not active" ||
+            error.message === "User not found" ||
+            error.message === "Current password is incorrect") {
             return handleError(res, error.message, 400)
         }
         handleError(res, "Cant update profile", 500)

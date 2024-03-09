@@ -26,7 +26,7 @@ export const getLoginService = async (req) => {
         throw new Error("Email or password invalid")
     }
 
-    const isValidPassword = bcrypt.compareSync(password, user.password)
+    const isValidPassword = bcrypt.compareSync(password, user.passwordHash)
 
     if(!isValidPassword){
         throw new Error("Email or password invalid")

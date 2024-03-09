@@ -1,22 +1,22 @@
 import User from "./user.model.js"
-import { checkUserIsActive, getProfileRepository, getUsersAsSuperAdminRepository, getUsersAsUserRepository } from "./user.repository.js"
+import { changePassword, checkUserIsActive, getProfileRepository, getUsersAsSuperAdminRepository, getUsersAsUserRepository } from "./user.repository.js"
 
 export const getUsersService = async (req) => {
     const skip = req.body.skip || 0
     const limit = req.body.limit || 10
     const roleName = req.tokenData.roleName
 
-    const name = req.body.name
+    const userName = req.body.userName
 
     if (roleName === "super_admin") {
-        const users = await getUsersAsSuperAdminRepository(name, skip, limit)
+        const users = await getUsersAsSuperAdminRepository(req, skip, limit)
         return users
     }    
 
     if (roleName !== "super_admin") {
-        console.log(1)
-        const users = await getUsersAsUserRepository(name, skip, limit)
-        console.log(2)
+
+        const users = await getUsersAsUserRepository(userName, skip, limit)
+
         return users
     }
 }
@@ -61,6 +61,10 @@ export const updateProfileService = async (req) => {
         data.email = email
     }
 
+    if(privacy === "public" || privacy === "private") {
+        data.privacy = privacy
+    }
+
     if( (currentPassword && !newPassword) ||
         (!currentPassword && newPassword) ){
         throw new Error("Both currentPassword and newPassword must be provided")
@@ -74,4 +78,6 @@ export const updateProfileService = async (req) => {
         data,
         { new: true }
     )
+
+    return profile
 }
