@@ -1,5 +1,5 @@
 import { emailInUse, userNameInUse } from "../auth/register.repository.js"
-import { changePassword, checkUserIsActive, getProfileRepository, getUsersAsSuperAdminRepository, getUsersAsUserRepository, updateProfileRepository } from "./user.repository.js"
+import { changePassword, checkUserIsActive, deleteUserRepository, getProfileRepository, getUsersAsSuperAdminRepository, getUsersAsUserRepository, updateProfileRepository, updateRoleRepository } from "./user.repository.js"
 
 export const getUsersService = async (req) => {
     const skip = req.body.skip || 0
@@ -78,6 +78,33 @@ export const updateProfileService = async (body, tokenId) => {
         data.passwordHash = updatedPass
     }
     const profile = await updateProfileRepository(userId, data)
+
+    return profile
+}
+
+export const deleteUserService = async (req) => {
+    const userId = req.params.id
+
+    const isActive = await checkUserIsActive(userId)
+
+    if (isActive) {
+        throw new Error("User is already active and can't be deleted")
+    }
+
+    const profile = await deleteUserRepository(userId)
+
+    return profile
+}
+
+export const updateRoleService = async (req) => {
+    const userId = req.params.id
+    const role = req.body.role
+
+    if (role !== "admin" && role !== "user") {
+        throw new Error("Role must be either user or admin")
+    }
+
+    const profile = await updateRoleRepository(userId, role)
 
     return profile
 }

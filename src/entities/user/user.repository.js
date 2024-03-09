@@ -53,7 +53,7 @@ export const getProfileRepository = async (userId) => {
 
 export const checkUserIsActive = async (userId) => {
     const user = await User.findById(userId).select("is_active")
-    
+    console.log(user)
     if (!user) {
         throw new Error("User not found")
     }
@@ -90,4 +90,26 @@ export const updateProfileRepository = async (userId, data) => {
     }
 
     return profile
+}
+
+export const deleteUserRepository = async (userId) => {
+
+    const deletedUser = await User.findByIdAndDelete(userId).select("-password")
+
+    return deletedUser
+}
+
+export const updateRoleRepository = async (userId, role) => {
+
+    const user = await User.findByIdAndUpdate(
+                                userId, 
+                                { role: role }, 
+                                { new: true })
+                                .select("-password")
+
+    if (!user) {
+        throw new Error("User not found")
+    }
+
+    return user
 }

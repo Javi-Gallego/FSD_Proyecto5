@@ -1,4 +1,4 @@
-import { getProfileService, getUsersService, updateProfileService } from "./user.service.js"
+import { deleteUserService, getProfileService, getUsersService, updateProfileService, updateRoleService } from "./user.service.js"
 import { handleError } from "../../utils/handleError.js"
 
 export const getUsers = async (req, res) => {
@@ -60,3 +60,38 @@ export const updateProfile = async (req, res) => {
     }
 }
 
+export const deleteUser = async (req, res) => {
+    try {
+        const profile = await deleteUserService(req)
+
+        res.status(200).json({
+            success: true,
+            message: "Profile deleted succesfully",
+            data: profile
+        })
+    } catch (error) {
+        if (error.message === "User is already active and can't be deleted" ||
+            error.message === "User not found") {
+            return handleError(res, error.message, 400)
+        }
+        handleError(res, "Cant delete user", 500)
+    }
+}
+
+export const updateRole = async (req, res) => {
+    try {
+        const profile = await updateRoleService(req)
+
+        res.status(200).json({
+            success: true,
+            message: "Role updated succesfully",
+            data: profile
+        })
+    } catch (error) {
+        if (error.message === "Role must be either user or admin" ||
+            error.message === "User not found") {
+            return handleError(res, error.message, 400)
+        }
+        handleError(res, "Cant change role", 500)
+    }
+}

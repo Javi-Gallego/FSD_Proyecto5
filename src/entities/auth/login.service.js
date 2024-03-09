@@ -21,7 +21,7 @@ export const getLoginService = async (req) => {
     }
     
     const user = await getUserByMail(email)
-    
+
     if(!user){
         throw new Error("Email or password invalid")
     }
