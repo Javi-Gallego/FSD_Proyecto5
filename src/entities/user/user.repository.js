@@ -13,3 +13,9 @@ export const getProfileRepository = async (userId) => {
 
     return profile
 }
+
+export const checkUserIsActive = async (userId) => {
+    const user = await User.findById(userId).select("is_active")
+    
+    return user.is_active
+}

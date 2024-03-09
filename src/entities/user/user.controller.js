@@ -30,10 +30,7 @@ export const getProfile = async (req, res) => {
             data: profile
         })
     } catch (error) {
-        if (error.message === "Email and password are required" ||
-            error.message === "Password must contain between 6 and 10 characters" ||
-            error.message === "Email format is not valid" ||
-            error.message === "Email or password invalid") {
+        if (error.message === "User is not active") {
             return handleError(res, error.message, 400)
         }
         handleError(res, "Cant retrieve profile", 500) //500 por defecto en la definicion de la funcion
