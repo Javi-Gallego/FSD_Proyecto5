@@ -89,7 +89,8 @@ export const updateRole = async (req, res) => {
         })
     } catch (error) {
         if (error.message === "Role must be either user or admin" ||
-            error.message === "User not found") {
+            error.message === "User not found" ||
+            error.message === "User is not active") {
             return handleError(res, error.message, 400)
         }
         handleError(res, "Cant change role", 500)

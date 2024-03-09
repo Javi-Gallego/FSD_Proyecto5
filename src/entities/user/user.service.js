@@ -100,6 +100,12 @@ export const updateRoleService = async (req) => {
     const userId = req.params.id
     const role = req.body.role
 
+    const isActive = await checkUserIsActive(userId)
+
+    if (!isActive) {
+        throw new Error("User is not active")
+    
+    }
     if (role !== "admin" && role !== "user") {
         throw new Error("Role must be either user or admin")
     }
