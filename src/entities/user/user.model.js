@@ -2,7 +2,16 @@ import { Schema, model } from "mongoose";
 
 const UserSchema = new Schema(
     {
-        name: {
+        userName: {
+            type: String,
+            required: true,
+            unique: true
+        },
+        firstName: {
+            type: String,
+            required: false
+        },
+        lastName: {
             type: String,
             required: false
         },
@@ -30,6 +39,11 @@ const UserSchema = new Schema(
             ref: "User",
             default: []
         }],
+        privacy: {
+            type: String,
+            enum: ["public", "private"],
+            default: "public"
+        },
         is_active: {
             type: Boolean,
             default: true

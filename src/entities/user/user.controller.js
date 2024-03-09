@@ -1,4 +1,4 @@
-import { getProfileService, getUsersService } from "./user.service.js"
+import { getProfileService, getUsersService, updateProfileService } from "./user.service.js"
 import { handleError } from "../../utils/handleError.js"
 
 export const getUsers = async (req, res) => {
@@ -11,11 +11,10 @@ export const getUsers = async (req, res) => {
             data: users
         })
     } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: "User cant be retrieved",
-            error: error.message
-        })
+        if (error.message === "Users not found") {
+            return handleError(res, error.message, 400)
+        }
+        handleError(res, "Cant retrieve users", 500)
     }
 }
 
@@ -34,6 +33,24 @@ export const getProfile = async (req, res) => {
             return handleError(res, error.message, 400)
         }
         handleError(res, "Cant retrieve profile", 500) //500 por defecto en la definicion de la funcion
+    }
+}
+
+export const updateProfile = async (req, res) => {
+    try {
+        const profile = await updateProfileService(req)
+
+        res.status(200).json({
+            success: true,
+            message: "Profile updated succesfully",
+            data: profile
+        })
+    } catch (error) {
+        if (error.message === "No data to update" || 
+            error.message === "Both currentPassword and newPassword must be provided") {
+            return handleError(res, error.message, 400)
+        }
+        handleError(res, "Cant update profile", 500)
     }
 }
 

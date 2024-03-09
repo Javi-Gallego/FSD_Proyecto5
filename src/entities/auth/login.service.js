@@ -39,7 +39,7 @@ export const getLoginService = async (req) => {
         },
         process.env.JWT_SECRET,
         {
-            expiresIn: "2h"
+            expiresIn: "24h"
         }
     )
     
