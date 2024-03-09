@@ -5,19 +5,20 @@ export const getUsersService = async (req) => {
     const skip = req.body.skip || 0
     const limit = req.body.limit || 10
     const roleName = req.tokenData.roleName
-    const users = {}
+
     const name = req.body.name
 
     if (roleName === "super_admin") {
-        users = await getUsersAsSuperAdminRepository(name, skip, limit)
-        console.log(users)
+        const users = await getUsersAsSuperAdminRepository(name, skip, limit)
+        return users
     }    
-    
+
     if (roleName !== "super_admin") {
-        users = await getUsersAsUserRepository(name, skip, limit)
+        console.log(1)
+        const users = await getUsersAsUserRepository(name, skip, limit)
+        console.log(2)
+        return users
     }
-    console.log(1)
-    return users
 }
 
 export const getProfileService = async (req) => {

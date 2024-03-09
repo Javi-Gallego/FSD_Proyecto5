@@ -8,7 +8,7 @@ export const getUsersAsSuperAdminRepository = async (name, skip, limit) => {
         .skip(skip)
         .limit(limit)
 
-    if (!users) {
+    if (users.length === 0) {
         throw new Error("Users not found")
     }
 
@@ -19,12 +19,13 @@ export const getUsersAsUserRepository = async (name, skip, limit) => {
 
     const users = await User.find({ 
         role: new RegExp(name, 'i'),
-        is_active: true  })
+        is_active: true,
+        privacy: "public"})
         .select("-password")
         .skip(skip)
         .limit(limit)
 
-    if (!users) {
+    if (users.length === 0) {
         throw new Error("Users not found")
     }
 

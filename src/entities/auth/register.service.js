@@ -3,11 +3,10 @@ import { createUser, emailInUse } from "./register.repository.js"
 
 export const getRegisterService = async (req) => {
 
-    const email = req.body.email
-    const password = req.body.password
+    const { userName, email, password } = req.body
 
-    if (!email || !password) {
-        throw new Error("Email and password are required")
+    if (!email || !password || !userName) {
+        throw new Error("User name, email and password are required")
     }
     
     if (password.length < 6 || password.length > 10) {
@@ -24,7 +23,7 @@ export const getRegisterService = async (req) => {
 
     const passwordEncrypted = bcrypt.hashSync(password, 5)
 
-    const newUser = await createUser(email, passwordEncrypted)
+    const newUser = await createUser(userName, email, passwordEncrypted)
 
     return newUser
 }
