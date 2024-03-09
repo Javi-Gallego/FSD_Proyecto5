@@ -1,4 +1,4 @@
-import { getUsersRepository } from "./user.repository.js"
+import { getProfileRepository, getUsersRepository } from "./user.repository.js"
 
 export const getUsersService = async (req) => {
     const skip = req.body.skip || 0
@@ -7,4 +7,13 @@ export const getUsersService = async (req) => {
     const users = await getUsersRepository(skip, limit)
 
     return users
+}
+
+export const getProfileService = async (req) => {
+
+    const userId = req.tokenData.userId
+
+    const profile = await getProfileRepository(userId)
+
+    return profile
 }
