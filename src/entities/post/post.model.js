@@ -4,11 +4,12 @@ const UserSchema = new Schema(
     {
         authorId:{
             type: Schema.Types.ObjectId,
-            ref: "User"
+            ref: "User",
+            required: true
         },
         message: {
             type: String,
-            required: false
+            required: true
         },
         likes: [{
             type: Schema.Types.ObjectId,
