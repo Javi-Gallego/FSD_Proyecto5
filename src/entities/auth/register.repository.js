@@ -5,7 +5,7 @@ export const emailInUse = async (email) => {
     const user = await User.findOne(
         { email: email }
     )
-        
+
     if (user) {
         throw new Error("Email already in use")
     }

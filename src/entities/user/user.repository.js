@@ -76,3 +76,18 @@ export const changePassword = async (userId, currentPassword, newPassword) => {
 
     return newPassHash
 }
+
+export const updateProfileRepository = async (userId, data) => {
+
+    const profile = await User.findByIdAndUpdate(
+                                userId, 
+                                data, 
+                                { new: true })
+                                .select("-password")
+
+    if (!profile) {
+        throw new Error("Profile not found")
+    }
+
+    return profile
+}

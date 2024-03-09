@@ -1,5 +1,5 @@
-import User from "./user.model.js"
-import { changePassword, checkUserIsActive, getProfileRepository, getUsersAsSuperAdminRepository, getUsersAsUserRepository } from "./user.repository.js"
+import { emailInUse, userNameInUse } from "../auth/register.repository.js"
+import { changePassword, checkUserIsActive, getProfileRepository, getUsersAsSuperAdminRepository, getUsersAsUserRepository, updateProfileRepository } from "./user.repository.js"
 
 export const getUsersService = async (req) => {
     const skip = req.body.skip || 0
@@ -36,17 +36,19 @@ export const getProfileService = async (req) => {
     return profile
 }
 
-export const updateProfileService = async (req) => {
-    const userId = req.tokenData.userId
-    const { name, firstName, lastName, email, currentPassword, newPassword, privacy} = req.body
-    const data = {}
+export const updateProfileService = async (body, tokenId) => {
 
-    if(!name && !firstName && !lastName && !email && !currentPassword && !newPassword && !privacy) {
+    const userId = tokenId
+    const { userName, firstName, lastName, email, currentPassword, newPassword, privacy } = body
+    const data = {}
+    
+    if(!userName && !firstName && !lastName && !email && !currentPassword && !newPassword && !privacy) {
         throw new Error("No data to update")
     }
 
-    if(name) {
-        data.userName = name
+    if(userName) {
+        const isUserName = await userNameInUse(userName)
+        data.userName = userName
     }
 
     if(firstName) {
@@ -58,6 +60,7 @@ export const updateProfileService = async (req) => {
     }
 
     if(email) {
+        const isEmail = await emailInUse(email)
         data.email = email
     }
 
@@ -72,12 +75,9 @@ export const updateProfileService = async (req) => {
 
     if(currentPassword && newPassword) {
         const updatedPass = await changePassword(userId, currentPassword, newPassword)
+        data.passwordHash = updatedPass
     }
-    const profile = await User.findByIdAndUpdate(
-        userId,
-        data,
-        { new: true }
-    )
+    const profile = await updateProfileRepository(userId, data)
 
     return profile
 }

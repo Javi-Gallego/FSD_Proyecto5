@@ -38,7 +38,7 @@ export const getProfile = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
     try {
-        const profile = await updateProfileService(req)
+        const profile = await updateProfileService(req.body, req.tokenData.userId)
 
         res.status(200).json({
             success: true,
@@ -50,7 +50,10 @@ export const updateProfile = async (req, res) => {
             error.message === "Both currentPassword and newPassword must be provided" ||
             error.message === "User is not active" ||
             error.message === "User not found" ||
-            error.message === "Current password is incorrect") {
+            error.message === "Current password is incorrect" ||
+            error.message === "Profile not found" ||
+            error.message === "Email already in use" ||
+            error.message === "User name already in use") {
             return handleError(res, error.message, 400)
         }
         handleError(res, "Cant update profile", 500)
