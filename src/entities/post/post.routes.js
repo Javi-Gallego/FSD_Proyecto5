@@ -1,12 +1,12 @@
 import { Router } from 'express'
 import { auth } from '../../core/auth.js'
 import { isSuperAdmin } from '../../core/isSuperAdmin.js'
-import { createPost, getAllPosts } from './post.controller.js'
+import { createPost, deletePost, getAllPosts } from './post.controller.js'
 
 const router = Router()
 
 router.post("/", auth, createPost)
-// router.delete("/:id", deletePost)
+router.delete("/:id", auth, deletePost) //crashea al lanzar errores
 // router.put("/", updatePostById)
 // router.get("/own", getOwnPosts)
 router.get("/", auth, isSuperAdmin, getAllPosts)

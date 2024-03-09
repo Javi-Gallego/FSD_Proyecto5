@@ -17,3 +17,16 @@ export const getAllPostsRepository = async () => {
 
     return posts
 }
+
+export const deletePostRepository = async (postId) => {
+    const deletedPost = await Post.findByIdAndDelete(postId)
+
+    return deletedPost
+}
+
+export const getPostRepository = async (postId) => {
+
+    const post = await Post.findById(postId)
+
+    return post
+}

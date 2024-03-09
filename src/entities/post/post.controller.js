@@ -1,4 +1,4 @@
-import { createPostService, getAllPostsService } from "./post.service.js"
+import { createPostService, deletePostService, getAllPostsService } from "./post.service.js"
 import { handleError } from "../../utils/handleError.js"
 
 export const createPost = async (req, res) => {
@@ -30,4 +30,22 @@ export const getAllPosts = async (req, res) => {
     } catch (error) {
         handleError(res, "Cant retrieve posts", 500)
     } 
+}
+
+export const deletePost = async (req, res) => {
+    try {
+        const post = deletePostService(req)
+
+        res.status(200).json({
+            success: true,
+            message: "Post deleted succesfully",
+            data: post
+        })
+    } catch (error) {
+        if (error.message === "You do not have permissions to delete this post" ||
+            error.message === "Post not found") {
+            return handleError(res, error.message, 400)
+        }
+        handleError(res, "Can not delete post", 500)
+    }
 }
