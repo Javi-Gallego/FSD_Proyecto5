@@ -1,4 +1,4 @@
-import { deleteUserService, followService, getProfileService, getUsersService, updateProfileService, updateRoleService } from "./user.service.js"
+import { deactivateUserService, deleteUserService, followService, getProfileService, getUsersService, updateProfileService, updateRoleService } from "./user.service.js"
 import { handleError } from "../../utils/handleError.js"
 
 export const getUsers = async (req, res) => {
@@ -113,5 +113,23 @@ export const follow = async (req, res) => {
             return handleError(res, error.message, 400)
         }
         handleError(res, "Cant follow/unfollow user", 500)
+    }
+}
+
+export const deactivateUser = async (req, res) => {
+    try {
+        const profile = await deactivateUserService(req)
+
+        res.status(200).json({
+            success: true,
+            message: "User deactivated succesfully",
+            data: profile
+        })
+    } catch (error) {
+        if (error.message === "User is already inactive" ||
+            error.message === "User not found") {
+            return handleError(res, error.message, 400)
+        }
+        handleError(res, "Cant deactivate user", 500)
     }
 }

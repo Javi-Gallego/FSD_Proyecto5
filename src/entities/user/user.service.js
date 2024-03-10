@@ -1,5 +1,5 @@
 import { emailInUse, userNameInUse } from "../auth/register.repository.js"
-import { changePassword, checkUserIsActive, deleteUserRepository, getProfileRepository, getUsersAsSuperAdminRepository, getUsersAsUserRepository, updateProfileRepository, updateRoleRepository } from "./user.repository.js"
+import { changePassword, checkUserIsActive, deactivateUserRepository, deleteUserRepository, getProfileRepository, getUsersAsSuperAdminRepository, getUsersAsUserRepository, updateProfileRepository, updateRoleRepository } from "./user.repository.js"
 
 export const getUsersService = async (req) => {
     const skip = req.body.skip || 0
@@ -146,4 +146,18 @@ export const followService = async (req, res) => {
     await userToFollow.save()
 
     return {userToFollow, userFollowing}
+}
+
+export const deactivateUserService = async (req) => {
+    const userId = req.tokenData.userId
+
+    const isActive = await checkUserIsActive(userId)
+
+    if (!isActive) {
+        throw new Error("User is already inactive")
+    }
+
+    const profile = await deactivateUserRepository(userId)
+
+    return profile
 }

@@ -113,3 +113,18 @@ export const updateRoleRepository = async (userId, role) => {
 
     return user
 }
+
+export const deactivateUserRepository = async (userId) => {
+    
+        const user = await User.findByIdAndUpdate(
+                                    userId, 
+                                    { is_active: false }, 
+                                    { new: true })
+                                    .select("-password")
+    
+        if (!user) {
+            throw new Error("User not found")
+        }
+    
+        return user
+}

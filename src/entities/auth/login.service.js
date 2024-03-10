@@ -26,6 +26,10 @@ export const getLoginService = async (req) => {
         throw new Error("Email or password invalid")
     }
 
+    if(!user.is_active){
+        throw new Error("User is not active. Send us an email to reactivate your account.")
+    }
+
     const isValidPassword = bcrypt.compareSync(password, user.passwordHash)
 
     if(!isValidPassword){
