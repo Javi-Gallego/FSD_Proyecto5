@@ -1,4 +1,4 @@
-import { deleteUserService, getProfileService, getUsersService, updateProfileService, updateRoleService } from "./user.service.js"
+import { deleteUserService, followService, getProfileService, getUsersService, updateProfileService, updateRoleService } from "./user.service.js"
 import { handleError } from "../../utils/handleError.js"
 
 export const getUsers = async (req, res) => {
@@ -94,5 +94,24 @@ export const updateRole = async (req, res) => {
             return handleError(res, error.message, 400)
         }
         handleError(res, "Cant change role", 500)
+    }
+}
+
+export const follow = async (req, res) => {
+    try {
+        const profile = await followService(req)
+
+        res.status(200).json({
+            success: true,
+            message: "Followed/unfollowed succesfully",
+            data: profile
+        })
+    } catch (error) {
+        if (error.message === "User not found" ||
+            error.message === "User is not active" ||
+            error.message === "You can't follow yourself") {
+            return handleError(res, error.message, 400)
+        }
+        handleError(res, "Cant follow/unfollow user", 500)
     }
 }

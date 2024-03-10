@@ -114,3 +114,41 @@ export const updateRoleService = async (req) => {
 
     return profile
 }
+
+export const followService = async (req, res) => {
+
+    const userToFollowId = req.params.id
+    const userFollowingId = req.tokenData.userId
+
+    const isActive = await checkUserIsActive(userToFollowId)
+
+    if (!isActive) {
+        throw new Error("User is not active")
+    }
+
+    if (userToFollowId === userFollowingId) {
+        throw new Error("You can't follow yourself")
+    }
+
+    const userToFollow = await getProfileRepository(userToFollowId)
+    const userFollowing = await getProfileRepository(userFollowingId)
+    console.log("antes de guardar")
+    if (userToFollow.followers.includes(userFollowingId)) {
+  
+        userToFollow.followers.pull(userFollowingId)
+        userFollowing.following.pull(userToFollowId)
+
+    } else {
+        console.log("userToFollow antes" + userToFollow)
+        userToFollow.followers.push(userFollowingId)
+        userFollowing.following.push(userToFollowId)
+        console.log("userToFollow después" + userToFollow)
+    }
+    try {
+        await userFollowing.save()
+    } catch (error) {
+        console.error(error)
+    }
+    console.log("despues de guardar")
+    return {userToFollow, userFollowing}
+}
