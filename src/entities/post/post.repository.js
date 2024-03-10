@@ -30,3 +30,12 @@ export const getPostRepository = async (postId) => {
 
     return post
 }
+
+export const updatePostRepository = async (postId, message) => {
+    const updatedPost = await Post.updateOne(
+        { _id: postId },
+        { $set: { message: message } },
+        { new: true })
+
+    return updatedPost
+}

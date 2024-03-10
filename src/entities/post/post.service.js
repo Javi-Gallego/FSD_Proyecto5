@@ -1,4 +1,4 @@
-import { createPostRepository, deletePostRepository, getAllPostsRepository, getPostRepository } from "./post.repository.js"
+import { createPostRepository, deletePostRepository, getAllPostsRepository, getPostRepository, updatePostRepository } from "./post.repository.js"
 
 export const createPostService = async (req) => {
     const message = req.body.message
@@ -38,4 +38,24 @@ export const deletePostService = async (req) => {
             throw new Error("You do not have permissions to delete this post")
         } 
         
+}
+
+export const updatePostService = async (req) => {
+    const { postId, message } = req.body
+    const { userId, roleName } = req.tokenData
+
+    const post = await getPostRepository(postId)
+    
+    if (!post) {
+        throw new Error("Post not found")
+    }
+
+    if (post.authorId.toString() === userId.toString() || roleName === "super_admin") {
+        const updatedPost = await updatePostRepository(postId, message)
+
+        return updatedPost    
+    } else {
+        throw new Error("You do not have permissions to update this post")
+    } 
+    
 }
