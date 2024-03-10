@@ -132,23 +132,18 @@ export const followService = async (req, res) => {
 
     const userToFollow = await getProfileRepository(userToFollowId)
     const userFollowing = await getProfileRepository(userFollowingId)
-    console.log("antes de guardar")
-    if (userToFollow.followers.includes(userFollowingId)) {
-  
+
+    if (userToFollow.followers.includes(userFollowingId)) { 
         userToFollow.followers.pull(userFollowingId)
         userFollowing.following.pull(userToFollowId)
 
     } else {
-        console.log("userToFollow antes" + userToFollow)
         userToFollow.followers.push(userFollowingId)
         userFollowing.following.push(userToFollowId)
-        console.log("userToFollow después" + userToFollow)
     }
-    try {
-        await userFollowing.save()
-    } catch (error) {
-        console.error(error)
-    }
-    console.log("despues de guardar")
+        
+    await userFollowing.save()
+    await userToFollow.save()
+
     return {userToFollow, userFollowing}
 }

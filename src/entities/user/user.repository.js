@@ -53,7 +53,7 @@ export const getProfileRepository = async (userId) => {
 
 export const checkUserIsActive = async (userId) => {
     const user = await User.findById(userId).select("is_active")
-    console.log(user)
+
     if (!user) {
         throw new Error("User not found")
     }

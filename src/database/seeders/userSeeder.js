@@ -1,25 +1,25 @@
-import User from "../../models/User.js";
-import mongoose from "mongoose";
-import bcrypt from "bcrypt";
-import { dbConnection } from "../../database/db.js";
+import User from "../../entities/user/user.model.js"
+import mongoose from "mongoose"
+import bcrypt from "bcrypt"
+import { dbConnection } from "../db.js"
 
 const userSeeder = async () => {
 	try {
-		const connect = await dbConnection();
-		console.log("Connected to MongoDB");
+		const connect = await dbConnection()
+		console.log("Connected to MongoDB")
 
 		const user = await User.create([
 			{
 				userName: "Super Admin",
                 email: "super_admin@gmail.com",
                 password: bcrypt.hashSync('123456', 5),
-                role: "super_admin",
+                role: "super_admin"
 			},
 			{
 				userName: "Admin",
                 email: "admin@gmail.com",
                 password: bcrypt.hashSync('123456', 5),
-                role: "admin",
+                role: "admin"
 			},
             {
 				userName: "User",
@@ -77,14 +77,16 @@ const userSeeder = async () => {
                 password: bcrypt.hashSync('123456', 5)
 			},
 
-		]);
+		])
 
-		console.log("Users created");
+        console.log("-------------------------------------")
+		console.log("----- Users created successfully ----")
+        console.log("-------------------------------------")
 	} catch (error) {
-		console.log(error);
+		console.log(error)
 	} finally {
-		mongoose.disconnect();
+		mongoose.disconnect()
 	}
-};
+}
 
-userSeeder();
+userSeeder()
