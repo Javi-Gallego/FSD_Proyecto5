@@ -15,6 +15,7 @@ export const getAllPostsRepository = async () => {
     const posts = await Post.find()
                             .populate("authorId", "userName -_id")
                             .populate("likes", "userName -_id")
+                            .populate("comments.commentatorId", "userName -_id")
                             .select("-createdAt -updatedAt")
 
     return posts
@@ -29,6 +30,10 @@ export const deletePostRepository = async (postId) => {
 export const getPostRepository = async (postId) => {
 
     const post = await Post.findById(postId)
+                            .populate("authorId", "userName -_id")
+                            .populate("likes", "userName -_id")
+                            .populate("comments.commentatorId", "userName -_id")
+                            .select("-createdAt -updatedAt")
 
     return post
 }
@@ -46,6 +51,7 @@ export const getOwnPostsRepository = async (userId) => {
     const posts = await Post.find({ authorId: userId })
                             .populate("authorId", "userName -_id")
                             .populate("likes", "userName -_id")
+                            .populate("comments.commentatorId", "userName -_id")
                             .select("-createdAt -updatedAt")
 
     return posts
