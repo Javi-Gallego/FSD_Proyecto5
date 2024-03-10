@@ -1,4 +1,4 @@
-import { createPostService, deletePostService, getAllPostsService, updatePostService } from "./post.service.js"
+import { createPostService, deletePostService, getAllPostsService, getOwnPostsService, updatePostService } from "./post.service.js"
 import { handleError } from "../../utils/handleError.js"
 
 export const createPost = async (req, res) => {
@@ -66,4 +66,18 @@ export const updatePost = async (req, res) => {
         }
         handleError(res, "Can not update post", 500)
     }
+}
+
+export const getOwnPosts = async (req, res) => {
+    try {
+        const posts = await getOwnPostsService(req)
+
+        res.status(201).json({
+            success: true,
+            message: "Posts retrieved succesfully",
+            data: posts
+        })
+    } catch (error) {
+        handleError(res, "Cant retrieve posts", 500)
+    } 
 }

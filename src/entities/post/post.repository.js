@@ -39,3 +39,11 @@ export const updatePostRepository = async (postId, message) => {
 
     return updatedPost
 }
+
+export const getOwnPostsRepository = async (userId) => {
+    const posts = await Post.find({ authorId: userId })
+                            .populate("authorId", "userName -_id")
+                            .select("-createdAt -updatedAt")
+
+    return posts
+}

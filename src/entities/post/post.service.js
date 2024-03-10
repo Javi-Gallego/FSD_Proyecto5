@@ -1,4 +1,4 @@
-import { createPostRepository, deletePostRepository, getAllPostsRepository, getPostRepository, updatePostRepository } from "./post.repository.js"
+import { createPostRepository, deletePostRepository, getAllPostsRepository, getOwnPostsRepository, getPostRepository, updatePostRepository } from "./post.repository.js"
 
 export const createPostService = async (req) => {
     const message = req.body.message
@@ -58,4 +58,12 @@ export const updatePostService = async (req) => {
         throw new Error("You do not have permissions to update this post")
     } 
     
+}
+
+export const getOwnPostsService = async (req) => {
+    const userId = req.tokenData.userId
+
+    const posts = await getOwnPostsRepository(userId)
+
+    return posts
 }
