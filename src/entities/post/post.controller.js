@@ -1,4 +1,4 @@
-import { createPostService, deletePostService, getAllPostsService, getOwnPostsService, likePostService, updatePostService } from "./post.service.js"
+import { createPostService, deletePostService, getAllPostsService, getOwnPostsService, getTimelineService, likePostService, updatePostService } from "./post.service.js"
 import { handleError } from "../../utils/handleError.js"
 
 export const createPost = async (req, res) => {
@@ -97,5 +97,23 @@ export const likePost = async (req, res) => {
             return handleError(res, error.message, 400)
         }
         handleError(res, "Can not like post", 500)
+    }
+}
+
+export const getTimeline = async (req, res) => {
+    try {
+        const post = await getTimelineService(req)
+
+        res.status(200).json({
+            success: true,
+            message: "Timeline retrieved succesfully",
+            data: post
+        })
+    } catch (error) {
+        if (error.message === "Post not found" ||
+            error.message === "You can not like your own post") {
+            return handleError(res, error.message, 400)
+        }
+        handleError(res, "Can not retrieve timeline", 500)
     }
 }

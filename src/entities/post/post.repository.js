@@ -1,4 +1,5 @@
 import Post from './post.model.js'
+import User from '../user/user.model.js'
 
 export const createPostRepository = async (message, userId) => {
     
@@ -48,4 +49,14 @@ export const getOwnPostsRepository = async (userId) => {
                             .select("-createdAt -updatedAt")
 
     return posts
+}
+
+export const getTimelineRepository = async (userId) => {
+    const user = await User.findById(userId)
+
+    const following = user.following
+
+    const timeline = await Post.find({ authorId: { $in: following } })
+
+    return timeline
 }

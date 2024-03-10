@@ -1,4 +1,4 @@
-import { createPostRepository, deletePostRepository, getAllPostsRepository, getOwnPostsRepository, getPostRepository, updatePostRepository } from "./post.repository.js"
+import { createPostRepository, deletePostRepository, getAllPostsRepository, getOwnPostsRepository, getPostRepository, getTimelineRepository, updatePostRepository } from "./post.repository.js"
 
 export const createPostService = async (req) => {
     const message = req.body.message
@@ -91,4 +91,12 @@ export const likePostService = async (req) => {
     await post.save()
 
     return post
+}
+
+export const getTimelineService = async (req) => {
+    const userId = req.tokenData.userId
+
+    const posts = await getTimelineRepository(userId)
+
+    return posts
 }

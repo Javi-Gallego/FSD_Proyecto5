@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { auth } from '../../core/auth.js'
 import { isSuperAdmin } from '../../core/isSuperAdmin.js'
-import { createPost, deletePost, getAllPosts, getOwnPosts, likePost, updatePost } from './post.controller.js'
+import { createPost, deletePost, getAllPosts, getOwnPosts, getTimeline, likePost, updatePost } from './post.controller.js'
 
 const router = Router()
 
@@ -11,5 +11,6 @@ router.put("/", auth, updatePost)
 router.get("/own", auth, getOwnPosts)
 router.get("/", auth, isSuperAdmin, getAllPosts)
 router.put("/like/:id", auth, likePost)
+router.get("/timeline", auth, getTimeline)
 
 export default router
