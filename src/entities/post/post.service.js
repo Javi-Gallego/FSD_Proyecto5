@@ -67,3 +67,28 @@ export const getOwnPostsService = async (req) => {
 
     return posts
 }
+
+export const likePostService = async (req) => {
+    const postId = req.params.id
+    const userId = req.tokenData.userId
+
+    const post = await getPostRepository(postId)
+    
+    if (!post) {
+        throw new Error("Post not found")
+    }
+    
+    if (post.authorId.toString() === userId.toString()) {
+        throw new Error("You can not like your own post")
+    }
+
+    if (post.likes.includes(userId)) {
+        post.likes.pull(userId)
+    } else {
+        post.likes.push(userId)
+    }
+
+    await post.save()
+
+    return post
+}
