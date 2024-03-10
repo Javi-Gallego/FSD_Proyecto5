@@ -1,4 +1,4 @@
-import { createPostService, deletePostService, getAllPostsService, getOwnPostsService, getTimelineService, likePostService, updatePostService } from "./post.service.js"
+import { commentPostService, createPostService, deletePostService, getAllPostsService, getOwnPostsService, getTimelineService, likePostService, updatePostService } from "./post.service.js"
 import { handleError } from "../../utils/handleError.js"
 
 export const createPost = async (req, res) => {
@@ -115,5 +115,22 @@ export const getTimeline = async (req, res) => {
             return handleError(res, error.message, 400)
         }
         handleError(res, "Can not retrieve timeline", 500)
+    }
+}
+
+export const commentPost = async (req, res) => {
+    try {
+        const post = await commentPostService(req)
+
+        res.status(200).json({
+            success: true,
+            message: "Comment added succesfully",
+            data: post
+        })
+    } catch (error) {
+        if (error.message === "Post not found") {
+            return handleError(res, error.message, 400)
+        }
+        handleError(res, "Can not comment post", 500)
     }
 }

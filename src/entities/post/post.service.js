@@ -100,3 +100,25 @@ export const getTimelineService = async (req) => {
 
     return posts
 }
+
+export const commentPostService = async (req) => {
+    const postId = req.params.id
+    const userId = req.tokenData.userId
+    const comment = req.body.comment
+
+    const post = await getPostRepository(postId)
+    
+    if (!post) {
+        throw new Error("Post not found")
+    }
+    console.log(post)
+    console.log(comment)
+    post.comments.push({ 
+        commentatorId: userId, 
+        commentary: comment
+    })
+
+    await post.save()
+
+    return post
+}
