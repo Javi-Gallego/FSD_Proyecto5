@@ -1,3 +1,4 @@
+import { ForbiddenError, ValidationError } from "../../utils/handleError.js"
 import { emailInUse, userNameInUse } from "../auth/register.repository.js"
 import { changePassword, checkUserIsActive, deactivateUserRepository, deleteUserRepository, getProfileRepository, getUsersAsSuperAdminRepository, getUsersAsUserRepository, updateProfileRepository, updateRoleRepository } from "./user.repository.js"
 
@@ -28,7 +29,7 @@ export const getProfileService = async (req) => {
     const isActive = await checkUserIsActive(userId)
 
     if (!isActive) {
-        throw new Error("User is not active")
+        throw new ForbiddenError("User is not active")
     }
 
     const profile = await getProfileRepository(userId)
@@ -43,7 +44,7 @@ export const updateProfileService = async (body, tokenId) => {
     const data = {}
     
     if(!userName && !firstName && !lastName && !email && !currentPassword && !newPassword && !privacy) {
-        throw new Error("No data to update")
+        throw new ValidationError("No data to update")
     }
 
     if(userName) {
@@ -88,7 +89,7 @@ export const deleteUserService = async (req) => {
     const isActive = await checkUserIsActive(userId)
 
     if (isActive) {
-        throw new Error("User is already active and can't be deleted")
+        throw new ForbiddenError("User is already active and can't be deleted")
     }
 
     const profile = await deleteUserRepository(userId)
@@ -103,11 +104,11 @@ export const updateRoleService = async (req) => {
     const isActive = await checkUserIsActive(userId)
 
     if (!isActive) {
-        throw new Error("User is not active")
+        throw new ForbiddenError("User is not active")
     
     }
     if (role !== "admin" && role !== "user") {
-        throw new Error("Role must be either user or admin")
+        throw new ValidationError("Role must be either user or admin")
     }
 
     const profile = await updateRoleRepository(userId, role)
@@ -123,11 +124,11 @@ export const followService = async (req, res) => {
     const isActive = await checkUserIsActive(userToFollowId)
 
     if (!isActive) {
-        throw new Error("User is not active")
+        throw new ForbiddenError("User is not active")
     }
 
     if (userToFollowId === userFollowingId) {
-        throw new Error("You can't follow yourself")
+        throw new ValidationError("You can't follow yourself")
     }
 
     const userToFollow = await getProfileRepository(userToFollowId)
@@ -154,7 +155,7 @@ export const deactivateUserService = async (req) => {
     const isActive = await checkUserIsActive(userId)
 
     if (!isActive) {
-        throw new Error("User is already inactive")
+        throw new ValidationError("User is already inactive")
     }
 
     const profile = await deactivateUserRepository(userId)

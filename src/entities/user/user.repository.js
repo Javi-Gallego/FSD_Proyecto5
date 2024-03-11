@@ -1,3 +1,4 @@
+import { ForbiddenError, NotFoundError } from "../../utils/handleError.js"
 import User from "./user.model.js"
 import bcrypt from "bcrypt"
 
@@ -16,7 +17,7 @@ export const getUsersAsSuperAdminRepository = async (req, skip, limit) => {
         .limit(limit)
 
     if (users.length === 0) {
-        throw new Error("Users not found")
+        throw new NotFoundError("Users not found")
     }
 
     return users
@@ -34,7 +35,7 @@ export const getUsersAsUserRepository = async (userName, skip, limit) => {
         .limit(limit)
 
     if (users.length === 0) {
-        throw new Error("Users not found")
+        throw new NotFoundError("Users not found")
     }
 
     return users
@@ -45,7 +46,7 @@ export const getProfileRepository = async (userId) => {
     const profile = await User.findById(userId).select("-password")
 
     if (!profile) {
-        throw new Error("Profile not found")
+        throw new NotFoundError("Profile not found")
     }
 
     return profile
@@ -55,7 +56,7 @@ export const checkUserIsActive = async (userId) => {
     const user = await User.findById(userId).select("is_active")
 
     if (!user) {
-        throw new Error("User not found")
+        throw new NotFoundError("User not found")
     }
 
     return user.is_active
@@ -65,11 +66,11 @@ export const changePassword = async (userId, currentPassword, newPassword) => {
     const user = await User.findById(userId)
 
     if (!user) {
-        throw new Error("User not found")
+        throw new NotFoundError("User not found")
     }
 
     if(!bcrypt.compareSync(currentPassword, user.passwordHash)){
-        throw new Error("Current password is incorrect")
+        throw new ForbiddenError("Current password is incorrect")
     }
 
     const newPassHash = bcrypt.hashSync(newPassword, 5)
@@ -86,7 +87,7 @@ export const updateProfileRepository = async (userId, data) => {
                                 .select("-password")
 
     if (!profile) {
-        throw new Error("Profile not found")
+        throw new NotFoundError("Profile not found")
     }
 
     return profile
@@ -108,7 +109,7 @@ export const updateRoleRepository = async (userId, role) => {
                                 .select("-password")
 
     if (!user) {
-        throw new Error("User not found")
+        throw new NotFoundError("User not found")
     }
 
     return user
@@ -123,7 +124,7 @@ export const deactivateUserRepository = async (userId) => {
                                     .select("-password")
     
         if (!user) {
-            throw new Error("User not found")
+            throw new NotFoundError("User not found")
         }
     
         return user

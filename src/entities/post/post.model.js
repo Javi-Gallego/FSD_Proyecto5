@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const UserSchema = new Schema(
+const PostSchema = new Schema(
     {
         authorId:{
             type: Schema.Types.ObjectId,
@@ -32,6 +32,6 @@ const UserSchema = new Schema(
     }
 )
 
-const User = model("Post", UserSchema)
+const Post = model("Post", PostSchema)
 
-export default User
+export default Post

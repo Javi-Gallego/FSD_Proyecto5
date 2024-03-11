@@ -1,5 +1,5 @@
 import { deactivateUserService, deleteUserService, followService, getProfileService, getUsersService, updateProfileService, updateRoleService } from "./user.service.js"
-import { handleError } from "../../utils/handleError.js"
+import { ForbiddenError, NotFoundError, ValidationError, handleError } from "../../utils/handleError.js"
 
 export const getUsers = async (req, res) => {
     try {
@@ -29,9 +29,12 @@ export const getProfile = async (req, res) => {
             data: profile
         })
     } catch (error) {
-        if (error.message === "User is not active") {
-            return handleError(res, error.message, 400)
+        if (error instanceof ValidationError || error instanceof NotFoundError || error instanceof ForbiddenError) {
+            return handleError(res, error.message, error.status, error.name)
         }
+        // if (error.message === "User is not active") {
+        //     return handleError(res, error.message, 400)
+        // }
         handleError(res, "Cant retrieve profile", 500) //500 por defecto en la definicion de la funcion
     }
 }
@@ -46,16 +49,19 @@ export const updateProfile = async (req, res) => {
             data: profile
         })
     } catch (error) {
-        if (error.message === "No data to update" || 
-            error.message === "Both currentPassword and newPassword must be provided" ||
-            error.message === "User is not active" ||
-            error.message === "User not found" ||
-            error.message === "Current password is incorrect" ||
-            error.message === "Profile not found" ||
-            error.message === "Email already in use" ||
-            error.message === "User name already in use") {
-            return handleError(res, error.message, 400)
+        if (error instanceof ValidationError || error instanceof NotFoundError || error instanceof ForbiddenError) {
+            return handleError(res, error.message, error.status, error.name)
         }
+        // if (error.message === "No data to update" || 
+        //     error.message === "Both currentPassword and newPassword must be provided" ||
+        //     error.message === "User is not active" ||
+        //     error.message === "User not found" ||
+        //     error.message === "Current password is incorrect" ||
+        //     error.message === "Profile not found" ||
+        //     error.message === "Email already in use" ||
+        //     error.message === "User name already in use") {
+        //     return handleError(res, error.message, 400)
+        // }
         handleError(res, "Cant update profile", 500)
     }
 }
@@ -70,10 +76,13 @@ export const deleteUser = async (req, res) => {
             data: profile
         })
     } catch (error) {
-        if (error.message === "User is already active and can't be deleted" ||
-            error.message === "User not found") {
-            return handleError(res, error.message, 400)
+        if (error instanceof ValidationError || error instanceof NotFoundError || error instanceof ForbiddenError) {
+            return handleError(res, error.message, error.status, error.name)
         }
+        // if (error.message === "User is already active and can't be deleted" ||
+        //     error.message === "User not found") {
+        //     return handleError(res, error.message, 400)
+        // }
         handleError(res, "Cant delete user", 500)
     }
 }
@@ -88,11 +97,14 @@ export const updateRole = async (req, res) => {
             data: profile
         })
     } catch (error) {
-        if (error.message === "Role must be either user or admin" ||
-            error.message === "User not found" ||
-            error.message === "User is not active") {
-            return handleError(res, error.message, 400)
+        if (error instanceof ValidationError || error instanceof NotFoundError || error instanceof ForbiddenError) {
+            return handleError(res, error.message, error.status, error.name)
         }
+        // if (error.message === "Role must be either user or admin" ||
+        //     error.message === "User not found" ||
+        //     error.message === "User is not active") {
+        //     return handleError(res, error.message, 400)
+        // }
         handleError(res, "Cant change role", 500)
     }
 }
@@ -107,11 +119,14 @@ export const follow = async (req, res) => {
             data: profile
         })
     } catch (error) {
-        if (error.message === "User not found" ||
-            error.message === "User is not active" ||
-            error.message === "You can't follow yourself") {
-            return handleError(res, error.message, 400)
+        if (error instanceof ValidationError || error instanceof NotFoundError || error instanceof ForbiddenError) {
+            return handleError(res, error.message, error.status, error.name)
         }
+        // if (error.message === "User not found" ||
+        //     error.message === "User is not active" ||
+        //     error.message === "You can't follow yourself") {
+        //     return handleError(res, error.message, 400)
+        // }
         handleError(res, "Cant follow/unfollow user", 500)
     }
 }
@@ -126,10 +141,13 @@ export const deactivateUser = async (req, res) => {
             data: profile
         })
     } catch (error) {
-        if (error.message === "User is already inactive" ||
-            error.message === "User not found") {
-            return handleError(res, error.message, 400)
+        if (error instanceof ValidationError || error instanceof NotFoundError || error instanceof ForbiddenError) {
+            return handleError(res, error.message, error.status, error.name)
         }
+        // if (error.message === "User is already inactive" ||
+        //     error.message === "User not found") {
+        //     return handleError(res, error.message, 400)
+        // }
         handleError(res, "Cant deactivate user", 500)
     }
 }
