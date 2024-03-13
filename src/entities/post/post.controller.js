@@ -1,5 +1,5 @@
 import { commentPostService, createPostService, deletePostService, getAllPostsService, getOwnPostsService, getTimelineService, likePostService, updatePostService } from "./post.service.js"
-import { handleError } from "../../utils/handleError.js"
+import { ForbiddenError, NotFoundError, ValidationError, handleError } from "../../utils/handleError.js"
 
 export const createPost = async (req, res) => {
     try {
@@ -14,7 +14,7 @@ export const createPost = async (req, res) => {
         if (error instanceof ValidationError) {
             return handleError(res, error.message, error.status, error.name)
         }
-        handleError(res, "Cant create post", 500, "")
+        handleError(res, "Cant create post", 500, error.message)
     }
 }
 
@@ -28,7 +28,7 @@ export const getAllPosts = async (req, res) => {
             data: posts
         })
     } catch (error) {
-        handleError(res, "Cant retrieve posts", 500)
+        handleError(res, "Cant retrieve posts", 500, error.message)
     } 
 }
 
@@ -42,11 +42,10 @@ export const deletePost = async (req, res) => {
             data: post
         })
     } catch (error) {
-        if (error.message === "You do not have permissions to delete this post" ||
-            error.message === "Post not found") {
-            return handleError(res, error.message, 400)
+        if (error instanceof NotFoundError || error instanceof ForbiddenError || error instanceof ValidationError) {
+            return handleError(res, error.message, error.status, error.name)
         }
-        handleError(res, "Can not delete post", 500)
+        handleError(res, "Can not delete post", 500, error.message)
     }
 }
 
@@ -60,11 +59,10 @@ export const updatePost = async (req, res) => {
             data: post
         })
     } catch (error) {
-        if (error.message === "You do not have permissions to update this post" ||
-            error.message === "Post not found") {
-            return handleError(res, error.message, 400)
+        if (error instanceof NotFoundError || error instanceof ForbiddenError || error instanceof ValidationError) {
+            return handleError(res, error.message, error.status, error.name)
         }
-        handleError(res, "Can not update post", 500)
+        handleError(res, "Can not update post", 500, error.message)
     }
 }
 
@@ -78,7 +76,7 @@ export const getOwnPosts = async (req, res) => {
             data: posts
         })
     } catch (error) {
-        handleError(res, "Cant retrieve posts", 500)
+        handleError(res, "Cant retrieve posts", 500, error.message)
     } 
 }
 
@@ -92,11 +90,10 @@ export const likePost = async (req, res) => {
             data: post
         })
     } catch (error) {
-        if (error.message === "Post not found" ||
-            error.message === "You can not like your own post") {
-            return handleError(res, error.message, 400)
+        if (error instanceof NotFoundError || error instanceof ForbiddenError || error instanceof ValidationError) {
+            return handleError(res, error.message, error.status, error.name)
         }
-        handleError(res, "Can not like post", 500)
+        handleError(res, "Can not like post", 500, error.message)
     }
 }
 
@@ -110,11 +107,10 @@ export const getTimeline = async (req, res) => {
             data: post
         })
     } catch (error) {
-        if (error.message === "Post not found" ||
-            error.message === "You can not like your own post") {
-            return handleError(res, error.message, 400)
+        if (error instanceof NotFoundError || error instanceof ForbiddenError || error instanceof ValidationError) {
+            return handleError(res, error.message, error.status, error.name)
         }
-        handleError(res, "Can not retrieve timeline", 500)
+        handleError(res, "Can not retrieve timeline", 500, error.message)
     }
 }
 
@@ -128,9 +124,9 @@ export const commentPost = async (req, res) => {
             data: post
         })
     } catch (error) {
-        if (error.message === "Post not found") {
-            return handleError(res, error.message, 400)
+        if (error instanceof NotFoundError || error instanceof ForbiddenError || error instanceof ValidationError) {
+            return handleError(res, error.message, error.status, error.name)
         }
-        handleError(res, "Can not comment post", 500)
+        handleError(res, "Can not comment post", 500, error.message)
     }
 }

@@ -35,13 +35,17 @@ export const userSeeder = async () => {
                 _id: "65edc873352c4f2a5cf087bb",
 				userName: "Javier",
                 email: "javier@gmail.com",
-                passwordHash: bcrypt.hashSync('123456', 5)
+                passwordHash: bcrypt.hashSync('123456', 5),
+                following: ["65edc887352c4f2a5cf087bf"],
+                followers: ["65edc887352c4f2a5cf087bf"]
 			},
             {
                 _id: "65edc887352c4f2a5cf087bf",
 				userName: "Silvia",
                 email: "silvia@gmail.com",
-                passwordHash: bcrypt.hashSync('123456', 5)
+                passwordHash: bcrypt.hashSync('123456', 5),
+                following: ["65edc873352c4f2a5cf087bb"],
+                followers: ["65edc873352c4f2a5cf087bb"]
 			},
             {
                 _id: "65edca3e352c4f2a5cf087c3",
@@ -97,6 +101,27 @@ export const userSeeder = async () => {
         console.log("-------------------------------------")
 		console.log("----- Users created successfully ----")
         console.log("-------------------------------------")
+        
+        const post = await Post.create([
+            {
+                _id: "65edcb67352c4f2a5cf087e3",
+				authorId: "65edc873352c4f2a5cf087bb",
+                message: "Este es el primer mensaje de la red social",
+                likes: [
+                    "65edcab5352c4f2a5cf087df", 
+                    "65edcaa0352c4f2a5cf087d7"
+                ],
+                comments: [
+                    { commentatorId: "65edcab5352c4f2a5cf087df", commentary: "Has estado rápido"},
+                    { commentatorId: "65edca6c352c4f2a5cf087cf", commentary: "Menudo logro..."},
+                ]
+			},
+        ])
+
+        console.log("-------------------------------------")
+		console.log("----- Posts created successfully ----")
+        console.log("-------------------------------------")
+
 	} catch (error) {
 		console.log(error)
 	} finally {

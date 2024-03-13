@@ -13,6 +13,8 @@ export const getUsersAsSuperAdminRepository = async (req, skip, limit) => {
         lastName: new RegExp(lastName, 'i'),
         role: new RegExp(role, 'i')})
         .select("-password")
+        .populate("following", "userName -_id")
+        .populate("followers", "userName -_id")
         .skip(skip)
         .limit(limit)
 
@@ -31,6 +33,8 @@ export const getUsersAsUserRepository = async (userName, skip, limit) => {
         is_active: true,
         privacy: "public"})
         .select("-password")
+        .populate("following", "userName -_id")
+        .populate("followers", "userName -_id")
         .skip(skip)
         .limit(limit)
 
@@ -43,7 +47,10 @@ export const getUsersAsUserRepository = async (userName, skip, limit) => {
 
 export const getProfileRepository = async (userId) => {
 
-    const profile = await User.findById(userId).select("-password")
+    const profile = await User.findById(userId)
+                                .select("-password")
+                                .populate("following", "userName -_id")
+                                .populate("followers", "userName -_id")
 
     if (!profile) {
         throw new NotFoundError("Profile not found")

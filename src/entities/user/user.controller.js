@@ -11,10 +11,10 @@ export const getUsers = async (req, res) => {
             data: users
         })
     } catch (error) {
-        if (error.message === "Users not found") {
-            return handleError(res, error.message, 400)
+        if (error instanceof NotFoundError) {
+            return handleError(res, error.message, error.status, error.name)
         }
-        handleError(res, "Cant retrieve users", 500)
+        handleError(res, "Cant retrieve users", 500, error.message)
     }
 }
 
@@ -35,7 +35,7 @@ export const getProfile = async (req, res) => {
         // if (error.message === "User is not active") {
         //     return handleError(res, error.message, 400)
         // }
-        handleError(res, "Cant retrieve profile", 500) //500 por defecto en la definicion de la funcion
+        handleError(res, "Cant retrieve profile", 500, error.message) //500 por defecto en la definicion de la funcion
     }
 }
 
@@ -62,7 +62,7 @@ export const updateProfile = async (req, res) => {
         //     error.message === "User name already in use") {
         //     return handleError(res, error.message, 400)
         // }
-        handleError(res, "Cant update profile", 500)
+        handleError(res, "Cant update profile", 500, error.message)
     }
 }
 
@@ -83,7 +83,7 @@ export const deleteUser = async (req, res) => {
         //     error.message === "User not found") {
         //     return handleError(res, error.message, 400)
         // }
-        handleError(res, "Cant delete user", 500)
+        handleError(res, "Cant delete user", 500, error.message)
     }
 }
 
@@ -105,7 +105,7 @@ export const updateRole = async (req, res) => {
         //     error.message === "User is not active") {
         //     return handleError(res, error.message, 400)
         // }
-        handleError(res, "Cant change role", 500)
+        handleError(res, "Cant change role", 500, error.message)
     }
 }
 
@@ -127,7 +127,7 @@ export const follow = async (req, res) => {
         //     error.message === "You can't follow yourself") {
         //     return handleError(res, error.message, 400)
         // }
-        handleError(res, "Cant follow/unfollow user", 500)
+        handleError(res, "Cant follow/unfollow user", 500, error.message)
     }
 }
 
@@ -148,6 +148,6 @@ export const deactivateUser = async (req, res) => {
         //     error.message === "User not found") {
         //     return handleError(res, error.message, 400)
         // }
-        handleError(res, "Cant deactivate user", 500)
+        handleError(res, "Cant deactivate user", 500, error.message)
     }
 }

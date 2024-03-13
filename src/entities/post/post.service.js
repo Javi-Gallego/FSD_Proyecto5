@@ -1,3 +1,4 @@
+import { ForbiddenError, NotFoundError, ValidationError } from "../../utils/handleError.js"
 import { createPostRepository, deletePostRepository, getAllPostsRepository, getOwnPostsRepository, getPostRepository, getTimelineRepository, updatePostRepository } from "./post.repository.js"
 
 export const createPostService = async (req) => {
@@ -5,7 +6,7 @@ export const createPostService = async (req) => {
     const userId = req.tokenData.userId
 
     if (!message) {
-        throw new Error("No message to create post")
+        throw new ValidationError("No message to create post")
     }
 
     const posts = await createPostRepository(message, userId)
@@ -27,7 +28,7 @@ export const deletePostService = async (req) => {
         const post = await getPostRepository(postId)
         
         if (!post) {
-            throw new Error("Post not found")
+            throw new NotFoundError("Post not found")
         }
 
         if (post.authorId.toString() === userId.toString() || roleName === "super_admin") {
@@ -35,7 +36,7 @@ export const deletePostService = async (req) => {
     
             return deletedPost    
         } else {
-            throw new Error("You do not have permissions to delete this post")
+            throw new ForbiddenError("You do not have permissions to delete this post")
         } 
         
 }
@@ -47,7 +48,7 @@ export const updatePostService = async (req) => {
     const post = await getPostRepository(postId)
     
     if (!post) {
-        throw new Error("Post not found")
+        throw new NotFoundError("Post not found")
     }
 
     if (post.authorId.toString() === userId.toString() || roleName === "super_admin") {
@@ -55,7 +56,7 @@ export const updatePostService = async (req) => {
 
         return updatedPost    
     } else {
-        throw new Error("You do not have permissions to update this post")
+        throw new ForbiddenError("You do not have permissions to update this post")
     } 
     
 }
@@ -75,11 +76,11 @@ export const likePostService = async (req) => {
     const post = await getPostRepository(postId)
     
     if (!post) {
-        throw new Error("Post not found")
+        throw new NotFoundError("Post not found")
     }
     
     if (post.authorId.toString() === userId.toString()) {
-        throw new Error("You can not like your own post")
+        throw new ValidationError("You can not like your own post")
     }
 
     if (post.likes.includes(userId)) {
@@ -109,7 +110,7 @@ export const commentPostService = async (req) => {
     const post = await getPostRepository(postId)
     
     if (!post) {
-        throw new Error("Post not found")
+        throw new NotFoundError("Post not found")
     }
     console.log(post)
     console.log(comment)

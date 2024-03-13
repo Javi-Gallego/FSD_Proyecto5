@@ -15,9 +15,7 @@ export const getUsersService = async (req) => {
     }    
 
     if (roleName !== "super_admin") {
-
         const users = await getUsersAsUserRepository(userName, skip, limit)
-
         return users
     }
 }
@@ -71,7 +69,7 @@ export const updateProfileService = async (body, tokenId) => {
 
     if( (currentPassword && !newPassword) ||
         (!currentPassword && newPassword) ){
-        throw new Error("Both currentPassword and newPassword must be provided")
+        throw new ValidationError("Both currentPassword and newPassword must be provided")
     }
 
     if(currentPassword && newPassword) {
