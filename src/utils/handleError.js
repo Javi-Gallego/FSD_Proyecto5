@@ -26,6 +26,7 @@ export class NotFoundError extends Error {
 export const handleError = (res, errorMessage, errorStatus, errorName) => {
     res.status(errorStatus).json({
         success: false,
-        message: errorName 
+        name: errorName,
+        message: errorMessage
     })
 }

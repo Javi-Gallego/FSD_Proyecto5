@@ -1,4 +1,4 @@
-import { handleError } from "../../utils/handleError.js"
+import { ValidationError, handleError } from "../../utils/handleError.js"
 import { getLoginService } from "./login.service.js"
 
 export const login = async (req, res) => {
@@ -12,13 +12,9 @@ export const login = async (req, res) => {
         })
 
     } catch (error) {
-        if (error.message === "Email and password are required" ||
-        error.message === "Password must contain between 6 and 10 characters" ||
-        error.message === "Email format is not valid" ||
-        error.message === "Email or password invalid" ||
-        error.message === "User is not active. Send us an email to reactivate your account.") {
-        return handleError(res, error.message, 400)
-    }
-    handleError(res, "Cant log user", 500) //500 por defecto en la definicion de la funcion
+        if (error instanceof ValidationError) {
+            return handleError(res, error.message, error.status, error.name)
+        }
+        handleError(res, "Cant log user", 500, "") //500 por defecto en la definicion de la funcion
     }
 }

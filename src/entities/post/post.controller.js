@@ -11,10 +11,10 @@ export const createPost = async (req, res) => {
             data: post
         })
     } catch (error) {
-        if (error.message === "No message to create post") {
-            return handleError(res, error.message, 400)
+        if (error instanceof ValidationError) {
+            return handleError(res, error.message, error.status, error.name)
         }
-        handleError(res, "Cant create post", 500)
+        handleError(res, "Cant create post", 500, "")
     }
 }
 

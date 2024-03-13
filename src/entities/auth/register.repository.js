@@ -1,3 +1,4 @@
+import { ValidationError } from "../../utils/handleError.js"
 import User from "../user/user.model.js"
 
 export const emailInUse = async (email) => {
@@ -7,7 +8,7 @@ export const emailInUse = async (email) => {
     )
 
     if (user) {
-        throw new Error("Email already in use")
+        throw new ValidationError("Email already in use")
     }
 }
 
@@ -18,7 +19,7 @@ export const userNameInUse = async (userName) => {
     )
 
     if (user) {
-        throw new Error("User name already in use")
+        throw new ValidationError("User name already in use")
     }
 }
 

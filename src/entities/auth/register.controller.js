@@ -1,25 +1,22 @@
-import { handleError } from '../../utils/handleError.js'
+import { ValidationError, handleError } from '../../utils/handleError.js'
 import { getRegisterService } from './register.service.js'
 
 export const register = async (req, res) => {
     try {
 
         const newUser = await getRegisterService(req)
-
+        console.log("newUser: " +  newUser._id)
         res.status(201).json({
             success: true,
             message: "User registered succesfully",
-            data: newUser
+            data: newUser,
+            id: newUser._id
         })
+
     } catch (error) {
-        if (error.message === "User name, email and password are required" ||
-            error.message === "User name must contain between 3 and 10 characters" ||
-            error.message === "Password must contain between 6 and 10 characters" ||
-            error.message === "Email format invalid" ||
-            error.message === "Email already in use" ||
-            error.message === "User name already in use") {
-            return handleError(res, error.message, 400)
+        if (error instanceof ValidationError) {
+            return handleError(res, error.message, error.status, error.name)
         }
-        handleError(res, "Cant register user", 500) //500 por defecto en la definicion de la funcion
+        handleError(res, "Cant register user", 500, "") //500 por defecto en la definicion de la funcion
     }
 }

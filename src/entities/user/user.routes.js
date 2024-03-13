@@ -12,6 +12,6 @@ router.put("/profile", auth, updateProfile)
 router.delete("/:id", auth, isSuperAdmin, deleteUser)
 router.put("/:id/role", auth, isSuperAdmin, updateRole)
 router.put("/follow/:id", auth, follow)
-router.put("/deactivate/", auth, deactivateUser)
+router.put("/deactivate", auth, deactivateUser)
 
 export default router
