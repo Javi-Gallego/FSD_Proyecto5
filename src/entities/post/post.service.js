@@ -9,6 +9,10 @@ export const createPostService = async (req) => {
         throw new ValidationError("No message to create post")
     }
 
+    if (message.length > 150) {
+        throw new ValidationError("Message must contain less than 150 characters")
+    }
+
     const posts = await createPostRepository(message, userId)
 
     return posts

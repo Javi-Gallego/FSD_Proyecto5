@@ -1,4 +1,7 @@
-# Welcome to my new Social Network
+
+<img src="./img/portada.jpg">
+
+# Welcome to the new geeks Network
 This is the fifth project in the Full Stack Developer Bootcamp at GeeksHubs
 
 
@@ -23,33 +26,18 @@ This is the fifth project in the Full Stack Developer Bootcamp at GeeksHubs
 
 Create a web app to create a social network. This project requires a functional API connected to a Mongo database.
 
+You can register and login and after that you can start sending messages. You must be logged to see and searchs others users and posts. It is possible to make your profile private so only people that you follow can see your profile or what you post.
 
-Create a web app to manage appointments of a tattoo studio. The project requires a functional API connected to a MySQL database.
+There is the possibility to write comments on other posts or to like them. And, if you can follow an user so that if he/she posts another message you can see it on your timeline.
 
-This studio has different services and the users can make appointments to which service they want.
-
-In case the service is a tattoo (there are another services like piercings) they can choose between the tattoo artists that work in the shop and, in case they want a design that the shop has in its catalog, they can select it.
-
-The super admin role can create new services, add images to the catalog, add new tatoo artists and change roles to users if needed.    
-
-Users can make, see and update their own appointments, they can also see and update their profiles.
-
-All people, without a login, can see the services and the catalog of the shop.
-
-Tattoo artists can see what appointments have scheduled.
+If you want to delete your account, there is the possibility to deactivate your account. Than way your profile and your posts will dissapear from the searchings. If you want to delete completely your account you have to contact a super admin and he/she will procceed after you have deactivated your account.
 
 
 ## Stack
 
 <div align="center">
-<a href="">
-    <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript" />
-</a>
 <a href="https://www.expressjs.com/">
     <img src= "https://img.shields.io/badge/express.js-%23c04d59.svg?style=for-the-badge&logo=express&logoColor=white" alt="Express JS"/>
-</a>
-<a href="">
-    <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=mysql&logoColor=white" alt="MySQL" />
 </a>
 <a href="https://nodejs.org/es/">
     <img src= "https://img.shields.io/badge/node.js-026E00?style=for-the-badge&logo=node.js&logoColor=white" alt="Node JS"/>
@@ -61,35 +49,36 @@ Tattoo artists can see what appointments have scheduled.
 <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
 </a>
 <a href="">
+    <img src="https://img.shields.io/badge/Mongo-447922?style=for-the-badge&logo=mysql&logoColor=white" alt="Mongo" />
+</a>
+<a href="">
     <img src="https://img.shields.io/badge/JWT-000000?style=for-the-badge&logo=jsonwebtokens&logoColor=white" alt="JWT" />
 </a>
 <a href="">
-    <img src="https://img.shields.io/badge/bcrypt-3178C6?style=for-the-badge&" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/bcrypt-3178C6?style=for-the-badge&" alt="BCrypt" />
 </a>
 <a href="">
-    <img src="https://img.shields.io/badge/thunder-cc6636?style=for-the-badge" alt="TypeScript" />
+    <img src="https://img.shields.io/badge/thunder-cc6636?style=for-the-badge" alt="Thunder" />
 </a>
  </div>
 
 ## Deploy 🚀
 <div align="center">
-    <a href="https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io"><strong>https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io</strong></a>🚀🚀🚀
+    <a href="https://socialnetwork-dev-stbs.2.ie-1.fl0.io"><strong>https://socialnetwork-dev-stbs.2.ie-1.fl0.io</strong></a>🚀🚀🚀
 </div>
 
 
 ## Local installation
 
-1. If you don't have MySQL installed on you computer, you can install Docker and execute the above command on your Powershell to create a MySQL container
-` $ docker run --name nombre-contenedor -p 3311:3306 -e MYSQL_ROOT_PASSWORD=1234 -d mysql `
+1. If you don't have MongoDB installed on you computer, you can install Docker and execute the above command on your Powershell to create a MongoDB container
+` $ docker run -d -p 27017:27017 --name mongo -v mongo_data:/data/db -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=root mongo:latest `
 2. Clone the repository
-` $ git clone https://github.com/Javi-Gallego/FSD_Proyecto4.git `
+` $ git clone https://github.com/Javi-Gallego/FSD_Proyecto5.git `
 3. Install dependencies
 ` $ npm install `
 4. Run server
 ` $ npm run dev `
-5. Run migrations on DB
-` $ npm run run-migrations `
-6. Mock DB with seeders
+5. Mock DB with seeders
 ` $ npm run seeds `
 
 ## API information
@@ -97,11 +86,9 @@ Tattoo artists can see what appointments have scheduled.
 <summary>Work in local</summary>
 The repository has a .env_local_sample. You have to change its name to .env to work properly
 
-In the HTTP directory there is a file named tattoo_shop_local.json, you can open it with 'Thunder Client' to have all the endpoints of the API.
+In the HTTP directory there is a file named social_network_local.json, you can open it with 'Thunder Client' to have all the endpoints of the API. For the endpoints examples below I will use the deployed url. In the tattoo_shop_local.json you have the url with your localhost.
 
-For the endpoints examples below I will put the deployed url. In the tattoo_shop_local.json you have the url with your localhost.
-
-If you will use the API in local, you need a connection to a DB and put the credentials in the .env as needed. These credentials are the user, the password for that user, the port to connect to the DB and the name of the database.
+If you will use the API in local, you need a connection to a DB and put the credentials in the .env as needed. These credentials will be in the .env_local_sample and will work with the docker container exposed in point 1 of the local installation.
 </details>
 
 <details>
@@ -117,7 +104,7 @@ When an endpoint needs authentication you must put the token given to you when y
 
  !['imagen-auth'](./img/AuthenticationToken.JPG)
 
- For a fast comprehension we will use icons to show what is needed to see the endopoints:
+ For a fast comprehension we will use icons to show what is needed to see the endpoints:
  :angel: You must be logged as super_admin
  :man: You must be logged
  :earth_africa: This endpoint is global and can be viewed by everybody
@@ -129,21 +116,11 @@ When an endpoint needs authentication you must put the token given to you when y
 
 ## DB relations
     
-    - "Roles" to "Users": One-to-many relationship
-    where:
-      - One role can have many users.
+    - Although MongoDB is a non relational database, we make various relations between our two collections.
 
-    - "Users" to "Appointments": One-to-many relationship
-    where:
-      - One user can have many appointments.
+    - In the posts fields: authorId, likes, and commentatorId in comments, the value is of the type ObjectId and has to be in Users.
 
-    - "Services" to "Appointments": One-to-many relationship
-    where:
-      - One service can have many appointments.
-
-    - "Catalogs" to "Appointments": One-to-many relationship
-    where:
-      - One catalog can have many appointments.
+    - Users also has an auto-relations because following and followers are arrays that cointains ObjectId and they have to be ids of actual Users.
 
 ## Endpoints
 
