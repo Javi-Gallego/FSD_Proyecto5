@@ -63,6 +63,9 @@ export const getTimelineRepository = async (userId) => {
     const following = user.following
 
     const timeline = await Post.find({ authorId: { $in: following } })
+                                .populate("authorId", "userName -_id")
+                                .populate("likes", "userName -_id")
+                                .populate("comments.commentatorId", "userName -_id")
 
     return timeline
 }
