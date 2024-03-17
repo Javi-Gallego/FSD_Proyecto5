@@ -31,7 +31,6 @@ export const getPostRepository = async (postId) => {
 
     const post = await Post.findById(postId)
                             .populate("authorId", "userName -_id")
-                            .populate("likes", "userName -_id")
                             .populate("comments.commentatorId", "userName -_id")
                             .select("-createdAt -updatedAt")
 

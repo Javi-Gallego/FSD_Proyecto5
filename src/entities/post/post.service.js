@@ -86,10 +86,12 @@ export const likePostService = async (req) => {
     if (post.authorId.toString() === userId.toString()) {
         throw new ValidationError("You can not like your own post")
     }
-
+    console.log(post.likes)
     if (post.likes.includes(userId)) {
+        console.log("quita like")
         post.likes.pull(userId)
     } else {
+        console.log("pon like")
         post.likes.push(userId)
     }
 
