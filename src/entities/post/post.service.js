@@ -49,7 +49,7 @@ export const updatePostService = async (req) => {
     const { postId, message } = req.body
     const { userId, roleName } = req.tokenData
 
-    const post = await getPostRepository(postId)
+    const post = await getPostToRemoveRepository(postId)
     
     if (!post) {
         throw new NotFoundError("Post not found")

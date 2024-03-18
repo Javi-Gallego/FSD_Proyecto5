@@ -286,18 +286,18 @@ When an endpoint needs authentication you must put the token given to you when y
 
         Authentication needed. You need to send the content of the post as a "message" in the body.
 
-    - DELETE POST :man:
+    - DELETE POST :angel: 
+
     
-            DELETE  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/posts/
+            DELETE  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/posts/65f888aaf5d72a527e071067
             body:
         ``` js
             {
-                "serviceId": 5,
-                "date": "2024-03-26 17:00:00"
+                
             }
         ```
-        You must be logged to create an appointment. In the body you must send all the fields needed. Only serviceId = 2 has the option of catalogId, and only serviceId 1, 2 and 3 have the option of artistId.
-    - UPDATE APPOINTMENT :lock:
+        You must be logged to delete a post and you must be either the author or a super_admin. The id of the post must be send as parameter in the url
+    - UPDATE POST :lock:
 
             PUT  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/appointments:id
             body:
