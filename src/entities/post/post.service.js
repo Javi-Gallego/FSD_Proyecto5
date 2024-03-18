@@ -119,6 +119,10 @@ export const commentPostService = async (req) => {
         throw new NotFoundError("Post not found")
     }
 
+    if (!comment) {
+        throw new ValidationError("No comment to add")
+    }
+
     post.comments.push({ 
         commentatorId: userId, 
         commentary: comment
