@@ -1,6 +1,6 @@
 import { ForbiddenError, ValidationError } from "../../utils/handleError.js"
 import { emailInUse, userNameInUse } from "../auth/register.repository.js"
-import { changePassword, checkUserIsActive, deactivateUserRepository, deleteUserRepository, getProfileRepository, getUserByIdRepository, getUsersAsSuperAdminRepository, getUsersAsUserRepository, updateActiveRepository, updateProfileRepository, updateRoleRepository } from "./user.repository.js"
+import { changePassword, checkUserIsActive, deactivateUserRepository, deleteUserRepository, getProfileFollowRepository, getProfileRepository, getUserByIdRepository, getUsersAsSuperAdminRepository, getUsersAsUserRepository, updateActiveRepository, updateProfileRepository, updateRoleRepository } from "./user.repository.js"
 
 export const getUsersService = async (req) => {
     const skip = req.body.skip || 0
@@ -129,8 +129,8 @@ export const followService = async (req, res) => {
         throw new ValidationError("You can't follow yourself")
     }
 
-    const userToFollow = await getProfileRepository(userToFollowId)
-    const userFollowing = await getProfileRepository(userFollowingId)
+    const userToFollow = await getProfileFollowRepository(userToFollowId)
+    const userFollowing = await getProfileFollowRepository(userFollowingId)
 
     if (userToFollow.followers.includes(userFollowingId)) { 
         userToFollow.followers.pull(userFollowingId)

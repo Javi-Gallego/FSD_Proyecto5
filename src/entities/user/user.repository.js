@@ -164,3 +164,15 @@ export const updateActiveRepository = async (userId) => {
 
     return user
 }
+
+export const getProfileFollowRepository = async (userId) => {
+
+    const profile = await User.findById(userId)
+                                .select("-passwordHash")
+                                
+    if (!profile) {
+        throw new NotFoundError("Profile not found")
+    }
+
+    return profile
+}

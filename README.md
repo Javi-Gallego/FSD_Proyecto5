@@ -229,16 +229,38 @@ When an endpoint needs authentication you must put the token given to you when y
 
         The only values accepted are: "admin" or "user"
 
-    - DEACTIVATE USER :angel:
+    - FOLLOW USER :lock:
 
-            PUT https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/users
+            PUT https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/users/deactivate
         body:
         ``` js
             {
-                "id": 10
+            
             }
         ```
-        You must be logged as super_admin. This time you must send the user id you want to delete in the body. 
+        You must be logged and pass the id of the user you want to follow as parameter. This endpoint will put the selected user in you following array and also put your id in the users followers array.
+
+    - DEACTIVATE USER :lock:
+
+            PUT https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/users/deactivate
+        body:
+        ``` js
+            {
+            
+            }
+        ```
+        You must be logged and the account will be inactive. This way you will not appear in searchs but your data will be kept in the DB
+
+    - REACTIVATE USER :angel:
+
+            PUT https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/users/superactivation/65edca96352c4f2a5cf087d3
+        body:
+        ``` js
+            {
+
+            }
+        ```
+        You must be logged as super_admin. If an account is deactivated it will be activated again. If the account is deleted there is no way to recover the account.
 
     - DELETE USER :angel:
 
@@ -246,10 +268,10 @@ When an endpoint needs authentication you must put the token given to you when y
         body:
         ``` js
             {
-                "id": 10
+                
             }
         ```
-        You must be logged as super_admin. This time you must send the user id you want to delete in the body. 
+        You must be logged as super_admin. Only an account that is already inactive can be deleted. 
 - SERVICES
     - GET SERVICES :earth_africa:
 
