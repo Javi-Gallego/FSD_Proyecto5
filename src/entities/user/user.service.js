@@ -1,6 +1,6 @@
 import { ForbiddenError, ValidationError } from "../../utils/handleError.js"
 import { emailInUse, userNameInUse } from "../auth/register.repository.js"
-import { changePassword, checkUserIsActive, deactivateUserRepository, deleteUserRepository, getProfileRepository, getUsersAsSuperAdminRepository, getUsersAsUserRepository, updateProfileRepository, updateRoleRepository } from "./user.repository.js"
+import { changePassword, checkUserIsActive, deactivateUserRepository, deleteUserRepository, getProfileRepository, getUserById, getUserByIdRepository, getUsersAsSuperAdminRepository, getUsersAsUserRepository, updateProfileRepository, updateRoleRepository } from "./user.repository.js"
 
 export const getUsersService = async (req) => {
     const skip = req.body.skip || 0
@@ -159,4 +159,17 @@ export const deactivateUserService = async (req) => {
     const profile = await deactivateUserRepository(userId)
 
     return profile
+}
+
+export const activateUserService = async (req) => {
+
+    const userId = req.params.id
+
+    const user = await getUserByIdRepository(userId)
+
+    user.is_active = !user.is_active
+
+    user.save()
+
+    return user
 }

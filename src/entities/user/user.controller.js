@@ -1,4 +1,4 @@
-import { deactivateUserService, deleteUserService, followService, getProfileService, getUsersService, updateProfileService, updateRoleService } from "./user.service.js"
+import { activateUserService, deactivateUserService, deleteUserService, followService, getProfileService, getUsersService, updateProfileService, updateRoleService } from "./user.service.js"
 import { ForbiddenError, NotFoundError, ValidationError, handleError } from "../../utils/handleError.js"
 
 export const getUsers = async (req, res) => {
@@ -144,10 +144,23 @@ export const deactivateUser = async (req, res) => {
         if (error instanceof ValidationError || error instanceof NotFoundError || error instanceof ForbiddenError) {
             return handleError(res, error.message, error.status, error.name)
         }
-        // if (error.message === "User is already inactive" ||
-        //     error.message === "User not found") {
-        //     return handleError(res, error.message, 400)
-        // }
         handleError(res, "Cant deactivate user", 500, error.message)
+    }
+}
+
+export const activateUser = async (req, res) => {
+    try {
+        const profile = await activateUserService(req)
+
+        res.status(200).json({
+            success: true,
+            message: "User activated succesfully",
+            data: profile
+        })
+    } catch (error) {
+        if (error instanceof ValidationError || error instanceof NotFoundError || error instanceof ForbiddenError) {
+            return handleError(res, error.message, error.status, error.name)
+        }
+        handleError(res, "Cant reactivate user", 500, error.message)
     }
 }

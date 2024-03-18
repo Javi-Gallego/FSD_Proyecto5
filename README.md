@@ -208,27 +208,38 @@ When an endpoint needs authentication you must put the token given to you when y
                 }
             }
         ```
-        This endponint has the query params "limit" and "page" to do a pagination of the users retrieved as a result. "limit" is the number of records shown each time. If there are more registres than the limit they are shown in next pages.
+        This endponint has the params "limit" and "skip" to do a pagination of the users retrieved as a result. "limit" is the number of records shown each time. If there are more registres than the limit they are shown in next pages with "skip". By default, limit is 10 and skip 0.
         
         There are two ways to get users, as super_admin or as a normal user.
 
-        If your are logged as super_admin and you don't have any value in the body it will show every user in the database but you can put some entries that will work as filters, they are optional to put and the value does not need to be exactly the same as in the database ie: if you search "Ja" as name it will retrieve every user thas has the string "Ja" in its user name. You can put as much filters as you want.  
+        If your are logged as super_admin and you don't have any value in the body it will show every user in the database but you can put some entries that will work as filters, they are optional to put and the value does not need to be exactly the same as in the database ie: if you search "Ja" as name it will retrieve every user thas has the string "Ja" in its user name. You can put as much filters as you want.
+
+        If you are logged as a normal user you can only search the field user name and it will be automatically filtered to retrieve only users that have their profile as public, that are active and that have the role user. Even if you send other fields the api will discard them and only search by user name (in the body named as "name")
 
     - UPDATE USER ROLE :angel:
 
-            PUT hhttps://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/users/13/role
+            PUT hhttps://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/users/65edca96352c4f2a5cf087d3/role
         body:
         ``` js
             {
-                "userRole": 3
+                "userRole": "admin"
             }
         ```
-        You must be logged as super_admin. In the url we pass the user id as a parameter and we should send the new role id of that user in the body. 
-        1 -> super_admin
-        2 -> admin
-        3 -> user
-        4 -> tattoo_artist
-        5 -> worker
+        You must be logged as super_admin. In the url we pass the user id as a parameter and we should send the new role of that user in the body. 
+
+        The only values accepted are: "admin" or "user"
+
+    - DEACTIVATE USER :angel:
+
+            PUT https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/users
+        body:
+        ``` js
+            {
+                "id": 10
+            }
+        ```
+        You must be logged as super_admin. This time you must send the user id you want to delete in the body. 
+
     - DELETE USER :angel:
 
             DELETE https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/users

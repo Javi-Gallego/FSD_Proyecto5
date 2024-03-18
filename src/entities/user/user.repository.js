@@ -136,3 +136,16 @@ export const deactivateUserRepository = async (userId) => {
     
         return user
 }
+
+export const getUserByIdRepository = async (userId) => {
+
+    const user = await User.find({ 
+        _id: userId })
+        .select("-password -following -followers -email -createdAt -updatedAt -role -_id")
+
+    if (user.length === 0) {
+        throw new NotFoundError("User not found")
+    }
+
+    return user
+}
