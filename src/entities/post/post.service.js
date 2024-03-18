@@ -113,13 +113,12 @@ export const commentPostService = async (req) => {
     const userId = req.tokenData.userId
     const comment = req.body.comment
 
-    const post = await getPostRepository(postId)
+    const post = await getPostToRemoveRepository(postId)
     
     if (!post) {
         throw new NotFoundError("Post not found")
     }
-    console.log(post)
-    console.log(comment)
+
     post.comments.push({ 
         commentatorId: userId, 
         commentary: comment

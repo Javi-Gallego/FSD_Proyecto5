@@ -299,22 +299,50 @@ When an endpoint needs authentication you must put the token given to you when y
         You must be logged to delete a post and you must be either the author or a super_admin. The id of the post must be send as parameter in the url
     - UPDATE POST :lock:
 
-            PUT  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/appointments:id
+            PUT  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/posts
             body:
         ``` js
             {
-                "serviceId": 2,
-                "artistId": 11,
-                "catalogId": 3,
-                "date": "2024-03-17 11:00:00"
+                "postId": "65f88e62e2b18a183f5e37e9",
+                "message": "Esto está actualizado"
             }
         ```
-        You must be logged to update an appointment. The id of the appointment must be passed as parameter in the url, in the body you can send all the fields you want to change. Only serviceId = 2 has the option of catalogId, and only serviceId 1, 2 and 3 have the option of artistId. If you are a normal user you can change only your own appointments. If you are logged as super admin, you can change every appointment of the DB.
-    - DELETE APPOINTMENT :angel: 
+        You must be logged to delete a post and you must be either the author or a super_admin. To update, in the body you must send the postid and the new message as in the example
 
-            DELETE  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/catalog/:id
+    - GET OWN POSTS :lock: 
 
-        You must be logged as super_admin to delete a tattoo. The id must be passed as parameter in the url
+            GET  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/posts/own
+
+        You must be logged and it will retrieve all the post written by you
+
+    - GET ALL POSTS :angel: 
+
+            GET  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/posts/own
+
+        You must be logged and it will retrieve all the posts
+
+    - LIKE POST :lock: 
+
+            PUT  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/posts/like/65f35ea33fa5deabe201709b
+
+        You must be logged give the id of the post as a parameter in the url. If you already like the post, you will automatically unlike if you try one more time.
+    
+    - GET TIMELINE :lock: 
+
+            GET  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/posts/timeline
+
+        You must be logged it will retrieve all the post written by the people you are following
+
+    - ADD A COMMENT TO A POST :lock: 
+
+            PUT  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/posts/comment/65edcb67352c4f2a5cf087e3
+            body:
+        ``` js
+            {
+                "message": "Esto está actualizado"
+            }
+        ```
+        You must be logged it will retrieve all the post written by the people you are following
 </details>
 
 ## Problems solutions
