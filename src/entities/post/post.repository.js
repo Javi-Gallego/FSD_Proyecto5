@@ -72,7 +72,6 @@ export const getTimelineRepository = async (userId) => {
 export const getPostToRemoveRepository = async (postId) => {
 
     const post = await Post.findById(postId)
-                            .populate("comments.commentatorId", "userName -_id")
                             .select("-createdAt -updatedAt")
 
     return post
