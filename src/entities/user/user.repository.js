@@ -32,7 +32,7 @@ export const getUsersAsUserRepository = async (userName, skip, limit) => {
         role: "user",
         is_active: true,
         privacy: "public"})
-        .select("-password")
+        .select("-password -email -createdAt -updatedAt -is_active  -role -_id")
         .populate("following", "userName -_id")
         .populate("followers", "userName -_id")
         .skip(skip)
@@ -48,7 +48,7 @@ export const getUsersAsUserRepository = async (userName, skip, limit) => {
 export const getProfileRepository = async (userId) => {
 
     const profile = await User.findById(userId)
-                                .select("-password")
+                                .select("-passwordHash")
                                 .populate("following", "userName -_id")
                                 .populate("followers", "userName -_id")
 

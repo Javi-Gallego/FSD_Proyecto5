@@ -131,20 +131,21 @@ When an endpoint needs authentication you must put the token given to you when y
 - AUTH
     - REGISTER :earth_africa:
 
-            POST https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/auth/register
+            POST https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/auth/register
         body:
         ``` js
             {
-                "first_name": "Alberto",
-                "last_name": "Martínez",
-                "email": "alberto@gmail.com",
-                "password": "123456"
+                {
+                    "userName": "Tee",
+                    "email": "remoto@gmail.com",
+                    "password": "123456"
+                }
             }
         ```
 
     - LOGIN :earth_africa:
 
-            POST https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/auth/login 
+            POST https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/auth/login 
         body:
         ``` js
             {
@@ -156,7 +157,7 @@ When an endpoint needs authentication you must put the token given to you when y
         body:
         ``` js
             {
-                "email": "javi@gmail.com",
+                "email": "user@gmail.com",
                 "password": "123456"
             }
         ```
@@ -164,47 +165,58 @@ When an endpoint needs authentication you must put the token given to you when y
 - USERS
     - PROFILE :lock:
 
-            GET https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/users/profile
+            GET https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/users/profile
 
-        You must be logged in and you will see the profile of the user authenticated.
+        You must be logged in and you will see the profile of the user authenticated.   
 
     - UPDATE PROFILE :lock:
 
-            PUT https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/users?limit=10&page=1
+            PUT https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/users?limit=10&page=1
             body:
         ``` js
             {
-                { 
-                    "email": "email",
-                    "firstName": "firstname",
-                    "lastName": "lastname",
-                    "currentPassw": "pass",
-                    "newPass": "newpass"
+                {
+                    "userName": "La Bruja Lola",
+                    "firstName": "Lola",
+                    "lastName": "Fernandez",
+                    "email": "labrujalola@gmail.com",
+                    "currentPassword": "123456",
+                    "newPassword": "123456",
+                    "privacy": "private"
                 }
             }
         ```
-        You must be logged because it will show the profile based on the id that is encrypted in the token. You can change your first name, last name, email or your password. If you want to change your password you must put your current password and the new password. It has same validations as in the registration.
-        Fields that want to be updated must be named in the body as in the example.
+        You must be logged because it will update the profile based on the id that is encrypted in the token. You can change any of the fields that are showed in the example and it has same validations as in the registration.
+        If you want to change your password you must put your current password and the new password.
+        Privacy can be private or public, if you put your profile as public your post can be searched by every user, if it is private only people that is in your following list can see you.
+        Fields that want to be updated must be named in the body as in the example.   
+
     - GET USERS :angel:
 
-            GET https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/users?limit=10&page=1
+            GET https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/users?limit=10&page=1
             body:
         ``` js
             {
-                { 
-                    "email": "email",
-                    "name": "firstname",
-                    "lastname": "lastname",
-                    "role": "rolename"
+                {
+                    "name": "Javi",
+                    "email": "ja",
+                    "firstName": "",
+                    "lastName": "",
+                    "role": "",
+                    "limit": 3,
+                    "skip": 0
                 }
             }
         ```
-        This endponint has the query params "limit" and "page". "limit" is the number of records shown each time. If there are more registres than the limit they are shown in next pages.
-        If you don't have any value in the body it will show every user in the database but you can put some entries that will work as filters, they are optional to put and the value must be exactly the same as in the database.
-        You must be logged as super_admin to retrieve users.
+        This endponint has the query params "limit" and "page" to do a pagination of the users retrieved as a result. "limit" is the number of records shown each time. If there are more registres than the limit they are shown in next pages.
+        
+        There are two ways to get users, as super_admin or as a normal user.
+
+        If your are logged as super_admin and you don't have any value in the body it will show every user in the database but you can put some entries that will work as filters, they are optional to put and the value does not need to be exactly the same as in the database ie: if you search "Ja" as name it will retrieve every user thas has the string "Ja" in its user name. You can put as much filters as you want.  
+
     - UPDATE USER ROLE :angel:
 
-            PUT https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/users/13/role
+            PUT hhttps://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/users/13/role
         body:
         ``` js
             {
@@ -219,7 +231,7 @@ When an endpoint needs authentication you must put the token given to you when y
         5 -> worker
     - DELETE USER :angel:
 
-            DELETE https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/users
+            DELETE https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/users
         body:
         ``` js
             {
@@ -230,12 +242,12 @@ When an endpoint needs authentication you must put the token given to you when y
 - SERVICES
     - GET SERVICES :earth_africa:
 
-            GET https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/services
+            GET https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/services
 
         Everybody can see all the services provided by the shop. No authentication needed.
     - CREATE SERVICES :angel: 
 
-            POST  https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/services
+            POST  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/services
             body:
         ``` js
             {
@@ -246,7 +258,7 @@ When an endpoint needs authentication you must put the token given to you when y
         You must be logged as super_admin to create a service. The body must have a "serviceName" and a "description" field.
     - UPDATE SERVICES :angel: 
 
-            PUT  https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/services/:id
+            PUT  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/services/:id
             body:
         ``` js
             {
@@ -257,7 +269,7 @@ When an endpoint needs authentication you must put the token given to you when y
         You must be logged as super_admin to update a service. The body must have a "serviceName" a "description" or both fields. The id of the updated service must be send via parameter in the url.
     - DELETE SERVICE :angel: 
 
-            DELETE  https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/services
+            DELETE  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/services
             body:
         ``` js
             {
@@ -271,13 +283,13 @@ When an endpoint needs authentication you must put the token given to you when y
 - CATALOG
     - GET CATALOG :earth_africa:
 
-            GET https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/catalog
+            GET https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/catalog
 
         Everybody can see all the tattoos int the catalog of the shop.
 
     - CREATE TATTOO
 
-            POST  https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/catalog
+            POST  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/catalog
             body:
         ``` js
             {
@@ -288,7 +300,7 @@ When an endpoint needs authentication you must put the token given to you when y
         You must be logged as super_admin to create a tattoo. The body must have a "tattooName" and a "urlImage" field.
     - UPDATE TATTOO :angel: 
 
-            PUT  https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/catalog/:id
+            PUT  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/catalog/:id
             body:
         ``` js
             {
@@ -299,14 +311,14 @@ When an endpoint needs authentication you must put the token given to you when y
         You must be logged as super_admin to update a tattoo. The body must have a "serviceName" a "description" or both fields. The id of the updated tattoo must be send via parameter in the url.
     - DELETE TATTOO :angel: 
 
-            DELETE  https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/catalog/:id
+            DELETE  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/catalog/:id
 
         You must be logged as super_admin to delete a tattoo. The id must be passed as parameter in the url
 
 - APPOINTMENTS
     - GET APPOINTMENTS :lock:
 
-            GET https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/appointments
+            GET https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/appointments
             query examples:
         ``` js
             {
@@ -318,7 +330,7 @@ When an endpoint needs authentication you must put the token given to you when y
 
     - CREATE APPOINTMENT :man:
     
-            POST  https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/appointments
+            POST  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/appointments
             body:
         ``` js
             {
@@ -329,7 +341,7 @@ When an endpoint needs authentication you must put the token given to you when y
         You must be logged to create an appointment. In the body you must send all the fields needed. Only serviceId = 2 has the option of catalogId, and only serviceId 1, 2 and 3 have the option of artistId.
     - UPDATE APPOINTMENT :lock:
 
-            PUT  https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/appointments:id
+            PUT  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/appointments:id
             body:
         ``` js
             {
@@ -342,7 +354,7 @@ When an endpoint needs authentication you must put the token given to you when y
         You must be logged to update an appointment. The id of the appointment must be passed as parameter in the url, in the body you can send all the fields you want to change. Only serviceId = 2 has the option of catalogId, and only serviceId 1, 2 and 3 have the option of artistId. If you are a normal user you can change only your own appointments. If you are logged as super admin, you can change every appointment of the DB.
     - DELETE APPOINTMENT :angel: 
 
-            DELETE  https://tattooshopfsdjavier-dev-rkdt.2.ie-1.fl0.io/api/catalog/:id
+            DELETE  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/catalog/:id
 
         You must be logged as super_admin to delete a tattoo. The id must be passed as parameter in the url
 </details>
