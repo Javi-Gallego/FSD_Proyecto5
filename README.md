@@ -116,11 +116,11 @@ When an endpoint needs authentication you must put the token given to you when y
 
 ## DB relations
     
-    - Although MongoDB is a non relational database, we make various relations between our two collections.
+    - Although MongoDB is a non relational database, we make various references between our two collections.
 
-    - In the posts fields: authorId, likes, and commentatorId in comments, the value is of the type ObjectId and has to be in Users.
+    - The values of the authorId, likes, and commentatorId fields of the Post entitie are of type ObjectId generated in Users.
 
-    - Users also has an auto-relations because following and followers are arrays that cointains ObjectId and they have to be ids of actual Users.
+    - Users also has auto-relations because following and followers are arrays that cointains ObjectId and they have to be ids of actual Users.
 
 ## Endpoints
 
