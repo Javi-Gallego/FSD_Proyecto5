@@ -1,5 +1,5 @@
 import { ForbiddenError, NotFoundError, ValidationError } from "../../utils/handleError.js"
-import { createPostRepository, deletePostRepository, getAllPostsRepository, getOwnPostsRepository, getPostRepository, getTimelineRepository, updatePostRepository } from "./post.repository.js"
+import { createPostRepository, deletePostRepository, getAllPostsRepository, getOwnPostsRepository, getPostRepository, getPostToRemoveRepository, getTimelineRepository, updatePostRepository } from "./post.repository.js"
 
 export const createPostService = async (req) => {
     const message = req.body.message
@@ -29,7 +29,7 @@ export const deletePostService = async (req) => {
         const postId = req.params.id
         const { userId, roleName } = req.tokenData
 
-        const post = await getPostRepository(postId)
+        const post = await getPostToRemoveRepository(postId)
         
         if (!post) {
             throw new NotFoundError("Post not found")

@@ -272,98 +272,23 @@ When an endpoint needs authentication you must put the token given to you when y
             }
         ```
         You must be logged as super_admin. Only an account that is already inactive can be deleted. 
-- SERVICES
-    - GET SERVICES :earth_africa:
 
-            GET https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/services
+- POSTS
+    - CREATE POST :lock:
 
-        Everybody can see all the services provided by the shop. No authentication needed.
-    - CREATE SERVICES :angel: 
-
-            POST  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/services
-            body:
-        ``` js
-            {
-                "serviceName": "name",
-                "description": "description"    
-            }
-        ```
-        You must be logged as super_admin to create a service. The body must have a "serviceName" and a "description" field.
-    - UPDATE SERVICES :angel: 
-
-            PUT  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/services/:id
-            body:
-        ``` js
-            {
-                "serviceName": "name",
-                "description": "description"
-            }
-        ```
-        You must be logged as super_admin to update a service. The body must have a "serviceName" a "description" or both fields. The id of the updated service must be send via parameter in the url.
-    - DELETE SERVICE :angel: 
-
-            DELETE  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/services
-            body:
-        ``` js
-            {
-                { 
-                    "id": 6,
-                }
-            }
-        ```
-        You must be logged as super_admin to delete a service. The body must have the id of the service to be deleted
-
-- CATALOG
-    - GET CATALOG :earth_africa:
-
-            GET https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/catalog
-
-        Everybody can see all the tattoos int the catalog of the shop.
-
-    - CREATE TATTOO
-
-            POST  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/catalog
-            body:
-        ``` js
-            {
-                "tattooName": "Rhino",
-                "urlImage": "./img/rhino.jpg"
-            }
-        ```
-        You must be logged as super_admin to create a tattoo. The body must have a "tattooName" and a "urlImage" field.
-    - UPDATE TATTOO :angel: 
-
-            PUT  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/catalog/:id
-            body:
-        ``` js
-            {
-                "tattooName": "Rrrrrhino",
-                "urlImage": "./img/rinrin.jpg"
-            }
-        ```
-        You must be logged as super_admin to update a tattoo. The body must have a "serviceName" a "description" or both fields. The id of the updated tattoo must be send via parameter in the url.
-    - DELETE TATTOO :angel: 
-
-            DELETE  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/catalog/:id
-
-        You must be logged as super_admin to delete a tattoo. The id must be passed as parameter in the url
-
-- APPOINTMENTS
-    - GET APPOINTMENTS :lock:
-
-            GET https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/appointments
+            POST https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/posts
             query examples:
         ``` js
             {
-                ?id=5&serviceId=2&artistId=11&catalogId=2
+                "message": "Este será un gran post de prueba"
             }
         ```
 
-        Authentication needed. If you are a normal user you can only retrieve your appointments. Only appointmets posterior to the actual date are shown. A Filter can be applied as query params and the values that can be checked are id, serviceId, artistId and catalogId, all the fields are optionals.
+        Authentication needed. You need to send the content of the post as a "message" in the body.
 
-    - CREATE APPOINTMENT :man:
+    - DELETE POST :man:
     
-            POST  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/appointments
+            DELETE  https://socialnetwork-dev-stbs.2.ie-1.fl0.io/api/posts/
             body:
         ``` js
             {
