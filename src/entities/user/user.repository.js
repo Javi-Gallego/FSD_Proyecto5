@@ -149,3 +149,18 @@ export const getUserByIdRepository = async (userId) => {
 
     return user
 }
+
+export const updateActiveRepository = async (userId) => {
+
+    const user = await User.findByIdAndUpdate(
+                                userId, 
+                                { is_active: true }, 
+                                { new: true })
+                                .select("-password")
+
+    if (!user) {
+        throw new NotFoundError("User not found")
+    }
+
+    return user
+}
