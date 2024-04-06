@@ -39,6 +39,10 @@ const UserSchema = new Schema(
             ref: "User",
             default: []
         }],
+        photo: {
+            type: String,
+            required: false
+        },
         privacy: {
             type: String,
             enum: ["public", "private"],

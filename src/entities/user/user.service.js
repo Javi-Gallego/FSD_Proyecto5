@@ -38,10 +38,10 @@ export const getProfileService = async (req) => {
 export const updateProfileService = async (body, tokenId) => {
 
     const userId = tokenId
-    const { userName, firstName, lastName, email, currentPassword, newPassword, privacy } = body
+    const { userName, firstName, lastName, email, photo, currentPassword, newPassword, privacy } = body
     const data = {}
     
-    if(!userName && !firstName && !lastName && !email && !currentPassword && !newPassword && !privacy) {
+    if(!userName && !firstName && !lastName && !email && !photo && !currentPassword && !newPassword && !privacy) {
         throw new ValidationError("No data to update")
     }
 
@@ -61,6 +61,10 @@ export const updateProfileService = async (body, tokenId) => {
     if(email) {
         const isEmail = await emailInUse(email)
         data.email = email
+    }
+    
+    if(photo) {
+        data.photo = photo
     }
 
     if(privacy === "public" || privacy === "private") {

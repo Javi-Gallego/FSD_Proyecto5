@@ -15,21 +15,21 @@ export const userSeeder = async () => {
                 _id: "65edc829352c4f2a5cf087af",
 				userName: "Super Admin",
                 email: "super_admin@gmail.com",
-                passwordHash: bcrypt.hashSync('123456', 5),
+                passwordHash: bcrypt.hashSync('Aa123456', 5),
                 role: "super_admin"
 			},
 			{
                 _id: "65edc842352c4f2a5cf087b3",
 				userName: "Admin",
                 email: "admin@gmail.com",
-                passwordHash: bcrypt.hashSync('123456', 5),
+                passwordHash: bcrypt.hashSync('Aa123456', 5),
                 role: "admin"
 			},
             {
                 _id: "65edc858352c4f2a5cf087b7",
 				userName: "User",
                 email: "user@gmail.com",
-                passwordHash: bcrypt.hashSync('123456', 5),
+                passwordHash: bcrypt.hashSync('Aa123456', 5),
                 following: ["65edc873352c4f2a5cf087bb"],
                 followers: ["65edc873352c4f2a5cf087bb", "65edcaa0352c4f2a5cf087d7", "65edcaa9352c4f2a5cf087db"]
 			},
@@ -37,7 +37,7 @@ export const userSeeder = async () => {
                 _id: "65edc873352c4f2a5cf087bb",
 				userName: "Javier",
                 email: "javier@gmail.com",
-                passwordHash: bcrypt.hashSync('123456', 5),
+                passwordHash: bcrypt.hashSync('Aa123456', 5),
                 following: ["65edc887352c4f2a5cf087bf", "65edca3e352c4f2a5cf087c3", "65edca4a352c4f2a5cf087c7", "65edc858352c4f2a5cf087b7"],
                 followers: ["65edc887352c4f2a5cf087bf", "65edca3e352c4f2a5cf087c3","65edca4a352c4f2a5cf087c7", "65edc858352c4f2a5cf087b7"]
 			},
@@ -45,7 +45,7 @@ export const userSeeder = async () => {
                 _id: "65edc887352c4f2a5cf087bf",
 				userName: "Silvia",
                 email: "silvia@gmail.com",
-                passwordHash: bcrypt.hashSync('123456', 5),
+                passwordHash: bcrypt.hashSync('Aa123456', 5),
                 following: ["65edc873352c4f2a5cf087bb"],
                 followers: ["65edc873352c4f2a5cf087bb"]
 			},
@@ -53,7 +53,7 @@ export const userSeeder = async () => {
                 _id: "65edca3e352c4f2a5cf087c3",
 				userName: "Raúl",
                 email: "raul@gmail.com",
-                passwordHash: bcrypt.hashSync('123456', 5),
+                passwordHash: bcrypt.hashSync('Aa123456', 5),
                 following: ["65edc873352c4f2a5cf087bb"],
                 followers: ["65edc873352c4f2a5cf087bb"]
 			},
@@ -61,7 +61,7 @@ export const userSeeder = async () => {
                 _id: "65edca4a352c4f2a5cf087c7",
 				userName: "Fernando",
                 email: "fernando@gmail.com",
-                passwordHash: bcrypt.hashSync('123456', 5),
+                passwordHash: bcrypt.hashSync('Aa123456', 5),
                 following: ["65edc873352c4f2a5cf087bb"],
                 followers: ["65edc873352c4f2a5cf087bb"]
 			},
@@ -69,7 +69,7 @@ export const userSeeder = async () => {
                 _id: "65edca5f352c4f2a5cf087cb",
 				userName: "Carlos",
                 email: "carlos@gmail.com",
-                passwordHash: bcrypt.hashSync('123456', 5),
+                passwordHash: bcrypt.hashSync('Aa123456', 5),
                 following: ["65edca6c352c4f2a5cf087cf"],
                 followers: ["65edca6c352c4f2a5cf087cf"]
 			},
@@ -77,7 +77,7 @@ export const userSeeder = async () => {
                 _id: "65edca6c352c4f2a5cf087cf",
 				userName: "Pedro",
                 email: "pedro@gmail.com",
-                passwordHash: bcrypt.hashSync('123456', 5),
+                passwordHash: bcrypt.hashSync('Aa123456', 5),
                 following: ["65edca5f352c4f2a5cf087cb"],
                 followers: ["65edca5f352c4f2a5cf087cb"]
 			},
@@ -85,27 +85,27 @@ export const userSeeder = async () => {
                 _id: "65edca96352c4f2a5cf087d3",
 				userName: "Ana",
                 email: "ana@gmail.com",
-                passwordHash: bcrypt.hashSync('123456', 5)
+                passwordHash: bcrypt.hashSync('Aa123456', 5)
 			},
             {
                 _id: "65edcaa0352c4f2a5cf087d7",
 				userName: "Sergio",
                 email: "sergio@gmail.com",
-                passwordHash: bcrypt.hashSync('123456', 5),
+                passwordHash: bcrypt.hashSync('Aa123456', 5),
                 following: ["65edc858352c4f2a5cf087b7"],
 			},
             {
                 _id: "65edcaa9352c4f2a5cf087db",
 				userName: "Marta",
                 email: "marta@gmail.com",
-                passwordHash: bcrypt.hashSync('123456', 5),
+                passwordHash: bcrypt.hashSync('Aa123456', 5),
                 following: ["65edc858352c4f2a5cf087b7"],
 			},
             {
                 _id: "65edcab5352c4f2a5cf087df",
 				userName: "Ramiro",
                 email: "ramiro@gmail.com",
-                passwordHash: bcrypt.hashSync('123456', 5)
+                passwordHash: bcrypt.hashSync('Aa123456', 5)
 			},
             // _id: new mongoose.Types.ObjectId("60f3b4e3e3e3e3e3e3e3e3e3")
 		])

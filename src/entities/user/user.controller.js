@@ -52,16 +52,6 @@ export const updateProfile = async (req, res) => {
         if (error instanceof ValidationError || error instanceof NotFoundError || error instanceof ForbiddenError) {
             return handleError(res, error.message, error.status, error.name)
         }
-        // if (error.message === "No data to update" || 
-        //     error.message === "Both currentPassword and newPassword must be provided" ||
-        //     error.message === "User is not active" ||
-        //     error.message === "User not found" ||
-        //     error.message === "Current password is incorrect" ||
-        //     error.message === "Profile not found" ||
-        //     error.message === "Email already in use" ||
-        //     error.message === "User name already in use") {
-        //     return handleError(res, error.message, 400)
-        // }
         handleError(res, "Cant update profile", 500, error.message)
     }
 }

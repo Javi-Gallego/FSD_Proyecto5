@@ -3,7 +3,6 @@ import { activateUser, deactivateUser, deleteUser, follow, getProfile, getUsers,
 import { auth } from '../../core/auth.js'
 import { isSuperAdmin } from '../../core/isSuperAdmin.js'
 
-
 const router = Router()
 
 router.get("/", auth, getUsers)
