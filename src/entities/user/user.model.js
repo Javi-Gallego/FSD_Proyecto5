@@ -41,7 +41,7 @@ const UserSchema = new Schema(
         }],
         photo: {
             type: String,
-            required: false
+            default: "http://localhost:4000/uploads/profile/userphoto.png"
         },
         privacy: {
             type: String,

@@ -102,9 +102,57 @@ export const userSeeder = async () => {
                 following: ["65edc858352c4f2a5cf087b7"],
 			},
             {
-                _id: "65edcab5352c4f2a5cf087df",
+                _id: "65edcab5352c4f2a5cf088df",
 				userName: "Ramiro",
                 email: "ramiro@gmail.com",
+                passwordHash: bcrypt.hashSync('Aa123456', 5)
+			},
+            {
+                _id: "65edcab5352c4f2a5cf0884f",
+				userName: "Victor",
+                email: "victor@gmail.com",
+                passwordHash: bcrypt.hashSync('Aa123456', 5)
+			},
+            {
+                _id: "65edcab5352c4f2a5cf0885f",
+				userName: "Antonio",
+                email: "antonio@gmail.com",
+                passwordHash: bcrypt.hashSync('Aa123456', 5)
+			},
+            {
+                _id: "65edcab5352c4f2a5cf0886f",
+				userName: "Marina",
+                email: "marina@gmail.com",
+                passwordHash: bcrypt.hashSync('Aa123456', 5)
+			},
+            {
+                _id: "65edcab5352c4f2a5cf0887f",
+				userName: "Claudia",
+                email: "claudia@gmail.com",
+                passwordHash: bcrypt.hashSync('Aa123456', 5)
+			},
+            {
+                _id: "65edcab5352c4f2a5cf0888f",
+				userName: "Paula",
+                email: "paula@gmail.com",
+                passwordHash: bcrypt.hashSync('Aa123456', 5)
+			},
+            {
+                _id: "65edcab5352c4f2a5cf0889f",
+				userName: "Fran",
+                email: "fran@gmail.com",
+                passwordHash: bcrypt.hashSync('Aa123456', 5)
+			},
+            {
+                _id: "65edcab5352c4f2a5cf0889a",
+				userName: "Troll",
+                email: "troll@gmail.com",
+                passwordHash: bcrypt.hashSync('Aa123456', 5)
+			},
+            {
+                _id: "65edcab5352c4f2a5cf0889b",
+				userName: "Niño rata",
+                email: "ninyorata@gmail.com",
                 passwordHash: bcrypt.hashSync('Aa123456', 5)
 			},
             // _id: new mongoose.Types.ObjectId("60f3b4e3e3e3e3e3e3e3e3e3")
@@ -174,8 +222,18 @@ export const userSeeder = async () => {
                 ]
 			},
             {
-				authorId: "65edc873352c4f2a5cf087bb",
+				authorId: "65edcab5352c4f2a5cf088df",
                 message: "¿Alguien sabe dónde pueden quitarme un mal de ojo? No es para mi, es para un amigo...",
+                likes: [
+                    "65edcab5352c4f2a5cf087df", 
+                    "65edcaa0352c4f2a5cf087d7",
+                    "65edcaa9352c4f2a5cf087db",
+                    "65edc858352c4f2a5cf087b7"
+                ]
+			},
+            {
+				authorId: "65edcab5352c4f2a5cf0889a",
+                message: "Esta red no vale para nada, me voy a Inkstagram",
                 likes: [
                     "65edcab5352c4f2a5cf087df", 
                     "65edcaa0352c4f2a5cf087d7",

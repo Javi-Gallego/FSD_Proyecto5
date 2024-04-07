@@ -40,7 +40,7 @@ export const updateProfileService = async (body, tokenId) => {
     const userId = tokenId
     const { userName, firstName, lastName, email, photo, currentPassword, newPassword, privacy } = body
     const data = {}
-    
+    console.log("body service", body)
     if(!userName && !firstName && !lastName && !email && !photo && !currentPassword && !newPassword && !privacy) {
         throw new ValidationError("No data to update")
     }
