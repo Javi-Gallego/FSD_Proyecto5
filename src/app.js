@@ -1,11 +1,11 @@
 import Express from "express";
 import router from "./routes/router.js";
 import cors from "cors";
-import multer from "multer";
+// import multer from "multer";
 
 export const app = Express();
 
-const upload = multer({ dest: "uploads/profile/" });
+// const upload = multer({ dest: "uploads/profile/" });
 
 app.use(cors());
 //parsea el body

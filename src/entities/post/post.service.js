@@ -2,8 +2,11 @@ import { ForbiddenError, NotFoundError, ValidationError } from "../../utils/hand
 import { createPostRepository, deletePostRepository, getAllPostsRepository, getOwnPostsRepository, getPostRepository, getPostToRemoveRepository, getTimelineRepository, updatePostRepository } from "./post.repository.js"
 
 export const createPostService = async (req) => {
+    
     const message = req.body.message
     const userId = req.tokenData.userId
+    let photoUrl = ""
+    let keyWords = []
 
     if (!message) {
         throw new ValidationError("No message to create post")
@@ -13,7 +16,14 @@ export const createPostService = async (req) => {
         throw new ValidationError("Message must contain less than 150 characters")
     }
 
-    const posts = await createPostRepository(message, userId)
+    if (req.body.photoUrl){
+        photoUrl = req.body.photoUrl
+    }
+
+    if (req.body.keyWords){
+        keyWords = req.body.keyWords.split(" ")
+    }
+    const posts = await createPostRepository(message, userId, photoUrl, keyWords)
 
     return posts
 }

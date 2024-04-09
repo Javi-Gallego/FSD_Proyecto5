@@ -3,6 +3,7 @@ import { ForbiddenError, NotFoundError, ValidationError, handleError } from "../
 
 export const createPost = async (req, res) => {
     try {
+
         const post = await createPostService(req)
 
         res.status(201).json({

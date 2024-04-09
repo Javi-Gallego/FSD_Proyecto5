@@ -7,6 +7,10 @@ const PostSchema = new Schema(
             ref: "User",
             required: true
         },
+        photoUrl: {
+            type: String,
+            required: false
+        },
         message: {
             type: String,
             required: true
@@ -16,15 +20,33 @@ const PostSchema = new Schema(
             ref: "User",
             default: []
         }],
-        comments: [{
-            commentatorId: {
-                type: Schema.Types.ObjectId,
-                ref: "User"
-            },
-            commentary: {
-                type: String,
-            }
+        keyWords: [{
+            type: String,
+            default: []
         }],
+        comments: [{
+            type: Schema.Types.ObjectId,
+            ref: "Post",
+            default: []
+        }],
+        refersTo:{
+            type: Schema.Types.ObjectId,
+            ref: "Post",
+            default: null
+        },
+        isComment: {
+            type: Boolean,
+            default: false
+        },
+        // comments: [{
+        //     commentatorId: {
+        //         type: Schema.Types.ObjectId,
+        //         ref: "User"
+        //     },
+        //     commentary: {
+        //         type: String,
+        //     }
+        // }],
     },
     {
         timestamps: true, // createdAt, updatedAt

@@ -1,78 +1,76 @@
-import Post from './post.model.js'
-import User from '../user/user.model.js'
+import Post from "./post.model.js";
+import User from "../user/user.model.js";
 
-export const createPostRepository = async (message, userId) => {
-    
-    const post = await Post.create({ 
-        message: message, 
-        authorId: userId })
+export const createPostRepository = async (message, userId, photoUrl, keyWords) => {
+    const post = await Post.create({
+    message: message,
+    authorId: userId,
+    photoUrl: photoUrl,
+    keyWords: keyWords,
+  });
 
-    return post
-}
+  return post;
+};
 
 export const getAllPostsRepository = async () => {
+  const posts = await Post.find()
+    .populate("authorId", "userName -_id")
+    .populate("likes", "userName -_id")
+    .populate("comments.commentatorId", "userName -_id")
+    .select("-createdAt -updatedAt");
 
-    const posts = await Post.find()
-                            .populate("authorId", "userName -_id")
-                            .populate("likes", "userName -_id")
-                            .populate("comments.commentatorId", "userName -_id")
-                            .select("-createdAt -updatedAt")
-
-    return posts
-}
+  return posts;
+};
 
 export const deletePostRepository = async (postId) => {
-    const deletedPost = await Post.findByIdAndDelete(postId)
+  const deletedPost = await Post.findByIdAndDelete(postId);
 
-    return deletedPost
-}
+  return deletedPost;
+};
 
 export const getPostRepository = async (postId) => {
+  const post = await Post.findById(postId)
+    .populate("authorId", "userName -_id")
+    .populate("comments.commentatorId", "userName -_id")
+    .select("-createdAt -updatedAt");
 
-    const post = await Post.findById(postId)
-                            .populate("authorId", "userName -_id")
-                            .populate("comments.commentatorId", "userName -_id")
-                            .select("-createdAt -updatedAt")
-
-    return post
-}
+  return post;
+};
 
 export const updatePostRepository = async (postId, message) => {
-    const updatedPost = await Post.updateOne(
-        { _id: postId },
-        { $set: { message: message } },
-        { new: true })
+  const updatedPost = await Post.updateOne(
+    { _id: postId },
+    { $set: { message: message } },
+    { new: true }
+  );
 
-    return updatedPost
-}
+  return updatedPost;
+};
 
 export const getOwnPostsRepository = async (userId) => {
-    const posts = await Post.find({ authorId: userId })
-                            .populate("authorId", "userName -_id")
-                            .populate("likes", "userName -_id")
-                            .populate("comments.commentatorId", "userName -_id")
-                            .select("-createdAt -updatedAt")
+  const posts = await Post.find({ authorId: userId })
+    .populate("authorId", "userName photo -_id")
+    .populate("likes", "userName -_id")
+    .populate("comments", "-_id");
 
-    return posts
-}
+  return posts;
+};
 
 export const getTimelineRepository = async (userId) => {
-    const user = await User.findById(userId)
+  const user = await User.findById(userId);
 
-    const following = user.following
+  const following = user.following;
 
-    const timeline = await Post.find({ authorId: { $in: following } })
-                                .populate("authorId", "userName -_id")
-                                .populate("likes", "userName -_id")
-                                .populate("comments.commentatorId", "userName -_id")
+  const timeline = await Post.find({ authorId: { $in: following } })
+    .populate("authorId", "userName photo -_id")
+    .populate("likes", "userName -_id")
+    .populate("comments", "userName photo -_id");
 
-    return timeline
-}
+  return timeline;
+};
 
 export const getPostToRemoveRepository = async (postId) => {
+  const post = await Post.findById(postId).select("-createdAt -updatedAt");
 
-    const post = await Post.findById(postId)
-                            .select("-createdAt -updatedAt")
-
-    return post
-}
+  return post;
+};
