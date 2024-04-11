@@ -38,15 +38,6 @@ const PostSchema = new Schema(
             type: Boolean,
             default: false
         },
-        // comments: [{
-        //     commentatorId: {
-        //         type: Schema.Types.ObjectId,
-        //         ref: "User"
-        //     },
-        //     commentary: {
-        //         type: String,
-        //     }
-        // }],
     },
     {
         timestamps: true, // createdAt, updatedAt

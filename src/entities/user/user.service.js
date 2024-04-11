@@ -7,8 +7,8 @@ export const getUsersService = async (req) => {
     const limit = req.body.limit || 10
     const roleName = req.tokenData.roleName
 
-    const userName = req.body.name
-
+    const userName = req.query.userName
+    console.log("userName: ", req.query.userName)
     if (roleName === "super_admin") {
         const users = await getUsersAsSuperAdminRepository(req, skip, limit)
         return users

@@ -31,7 +31,7 @@ export const getUsersAsUserRepository = async (userName, skip, limit) => {
         userName: new RegExp(userName, 'i'),
         role: "user",
         is_active: true})
-        .select("-password -email -createdAt -updatedAt -is_active  -role -_id")
+        .select("-passwordHash -email -updatedAt -is_active  -role -_id")
         .populate("following", "userName -_id")
         .populate("followers", "userName -_id")
         .skip(skip)
