@@ -97,7 +97,10 @@ export const changePassword = async (userId, currentPassword, newPassword) => {
 export const updateProfileRepository = async (userId, data) => {
   const profile = await User.findByIdAndUpdate(userId, data, {
     new: true,
-  }).select("-password");
+  })
+    .select("-passwordHash")
+    .populate("following", "userName -_id")
+    .populate("followers", "userName -_id");
 
   if (!profile) {
     throw new NotFoundError("Profile not found");
@@ -179,19 +182,17 @@ export const getProfileFollowRepository = async (userId) => {
 };
 
 export const getfollowingRepository = async (userId) => {
-    const user = await User.find({
-        _id: userId,
-        is_active: true,
-      }).select(
-        "-password -email -createdAt -updatedAt -role -_id"
-      )
-      .populate("following", "userName _id photo")
-      .populate("followers", "userName _id photo");
+  const user = await User.find({
+    _id: userId,
+    is_active: true,
+  })
+    .select("-password -email -createdAt -updatedAt -role -_id")
+    .populate("following", "userName _id photo")
+    .populate("followers", "userName _id photo");
 
-    
-      if (user.length === 0) {
-        throw new NotFoundError("User not found");
-      }
-    
-      return user;
+  if (user.length === 0) {
+    throw new NotFoundError("User not found");
+  }
+
+  return user;
 };
