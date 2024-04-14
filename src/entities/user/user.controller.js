@@ -1,4 +1,4 @@
-import { activateUserService, deactivateUserService, deleteUserService, followService, getProfileService, getUsersService, updateProfileService, updateRoleService } from "./user.service.js"
+import { activateUserService, deactivateUserService, deleteUserService, followService, getFollowingService, getProfileService, getUsersService, updateProfileService, updateRoleService } from "./user.service.js"
 import { ForbiddenError, NotFoundError, ValidationError, handleError } from "../../utils/handleError.js"
 
 export const getUsers = async (req, res) => {
@@ -155,3 +155,20 @@ export const activateUser = async (req, res) => {
         handleError(res, "Cant reactivate user", 500, error.message)
     }
 }
+
+export const getFollowing = async (req, res) => {
+    try {
+        const users = await getFollowingService(req)
+
+        res.status(200).json({
+            success: true,
+            message: "Following retrieved succesfully",
+            data: users
+        })
+    } catch (error) {
+        if (error instanceof ValidationError || error instanceof NotFoundError || error instanceof ForbiddenError) {
+            return handleError(res, error.message, error.status, error.name)
+        }
+        handleError(res, "Cant retrieve following", 500, error.message)
+    }
+};

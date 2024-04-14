@@ -1,12 +1,13 @@
 import { ForbiddenError, ValidationError } from "../../utils/handleError.js"
 import { emailInUse, userNameInUse } from "../auth/register.repository.js"
-import { changePassword, checkUserIsActive, deactivateUserRepository, deleteUserRepository, getProfileFollowRepository, getProfileRepository, getUserByIdRepository, getUsersAsSuperAdminRepository, getUsersAsUserRepository, updateActiveRepository, updateProfileRepository, updateRoleRepository } from "./user.repository.js"
+import { changePassword, checkUserIsActive, deactivateUserRepository, deleteUserRepository, getProfileFollowRepository, getProfileRepository, getUserByIdRepository, getUsersAsSuperAdminRepository, getUsersAsUserRepository, getfollowingRepository, updateActiveRepository, updateProfileRepository, updateRoleRepository } from "./user.repository.js"
 
 export const getUsersService = async (req) => {
-    const skip = req.body.skip || 0
-    const limit = req.body.limit || 10
+    console.log("service")
+    const page = parseInt(req.query.skip) || 1
+    const limit = parseInt(req.query.limit) || 10
     const roleName = req.tokenData.roleName
-
+    const skip = (page-1)*limit
     const userName = req.query.userName
 
     if (roleName === "super_admin") {
@@ -174,4 +175,12 @@ export const activateUserService = async (req) => {
     const updatedUser = await updateActiveRepository(userId)
 
     return updatedUser
+}
+
+export const getFollowingService = async (req) => {
+    const userId = req.tokenData.userId
+
+    const profile = await getfollowingRepository(userId)
+
+    return profile
 }
