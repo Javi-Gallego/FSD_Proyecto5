@@ -8,7 +8,7 @@ export const getUsersService = async (req) => {
     const roleName = req.tokenData.roleName
 
     const userName = req.query.userName
-    console.log("userName: ", req.query.userName)
+
     if (roleName === "super_admin") {
         const users = await getUsersAsSuperAdminRepository(req, skip, limit)
         return users
@@ -119,7 +119,7 @@ export const updateRoleService = async (req) => {
 }
 
 export const followService = async (req, res) => {
-
+    console.log("followservice")
     const userToFollowId = req.params.id
     const userFollowingId = req.tokenData.userId
 

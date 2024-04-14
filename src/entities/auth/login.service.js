@@ -47,6 +47,8 @@ export const getLoginService = async (req) => {
       userName: user.userName,
       roleName: user.role,
       photo: user.photo,
+      following: user.following,
+      followers: user.followers,
     },
     process.env.JWT_SECRET,
     {

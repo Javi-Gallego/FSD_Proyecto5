@@ -101,6 +101,7 @@ export const updateRole = async (req, res) => {
 
 export const follow = async (req, res) => {
     try {
+        console.log("followcontroller")
         const profile = await followService(req)
 
         res.status(200).json({
