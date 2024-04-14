@@ -148,7 +148,8 @@ export const followService = async (req, res) => {
         
     await userFollowing.save()
     await userToFollow.save()
-
+console.log("le siguen: ", userToFollow)
+console.log("sigue a: ", userFollowing)
     return {userToFollow, userFollowing}
 }
 

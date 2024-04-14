@@ -1,6 +1,7 @@
 import Post from "./post.model.js";
 import User from "../user/user.model.js";
 import { model } from "mongoose";
+import { follow } from "../user/user.controller.js";
 
 export const createPostRepository = async (
   message,
@@ -190,4 +191,45 @@ export const createCommentRepository = async (
   });
 
   return post;
+};
+
+export const getMostLikedPostsRepository = async () => {
+  console.log("repository");
+  const posts = await Post.aggregate([
+    {
+      $addFields: {
+        likesCount: { $size: "$likes" },
+      },
+    },
+    {
+      $sort: { likesCount: -1 },
+    },
+    {
+      $limit: 10,
+    },
+    {
+      $lookup: {
+        from: "users", 
+        localField: "authorId", 
+        foreignField: "_id", 
+        as: "authorId"
+      },
+    },
+    {
+      $unwind: "$authorId"
+    },
+    {
+      $project: { 
+        "authorId.userName": 1,
+        "authorId.photo": 1,
+        _id: 1,
+        likes: 1,
+        message: 1,
+        following: 1,
+        followers: 1,
+      }
+    }
+  ]);
+
+  return posts;
 };

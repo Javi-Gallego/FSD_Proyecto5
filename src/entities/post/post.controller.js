@@ -1,4 +1,4 @@
-import { commentPostService, createCommentService, createPostService, deletePostService, getAllPostsService, getOwnPostsService, getTimelineService, likePostService, searchPostsService, updatePostService } from "./post.service.js"
+import { commentPostService, createCommentService, createPostService, deletePostService, getAllPostsService, getMostLikedPostsService, getOwnPostsService, getTimelineService, likePostService, searchPostsService, updatePostService } from "./post.service.js"
 import { ForbiddenError, NotFoundError, ValidationError, handleError } from "../../utils/handleError.js"
 
 export const createPost = async (req, res) => {
@@ -165,3 +165,18 @@ export const createComment = async (req, res) => {
         handleError(res, "Can not comment post", 500, error.message)
     }
 }
+
+export const getMostLikedPosts = async (req, res) => {
+    try {
+        console.log("controller")
+        const posts = await getMostLikedPostsService(req)
+
+        res.status(201).json({
+            success: true,
+            message: "Posts retrieved succesfully",
+            data: posts
+        })
+    } catch (error) {
+        handleError(res, "Cant retrieve posts", 500, error.message)
+    } 
+};

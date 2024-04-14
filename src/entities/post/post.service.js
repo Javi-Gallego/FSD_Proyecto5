@@ -9,6 +9,7 @@ import {
   deletePostRepository,
   getAllPostsSuperRepository,
   getAllPostsUserRepository,
+  getMostLikedPostsRepository,
   getOwnPostsRepository,
   getPostRepository,
   getPostToRemoveRepository,
@@ -237,6 +238,13 @@ export const createCommentService = async (req) => {
     updatedPost.comments.push(posts._id);
   }
   await updatedPost.save();
+
+  return posts;
+};
+
+export const getMostLikedPostsService = async (req) => {
+  console.log("service");
+  const posts = await getMostLikedPostsRepository(req);
 
   return posts;
 };
